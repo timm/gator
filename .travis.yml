@@ -1,0 +1,19 @@
+language: common-lisp
+sudo: required
+
+env:
+  matrix:
+    - LISP=sbcl
+    - LISP=clisp
+
+install:
+  # Install cl-travis
+  - curl https://raw.githubusercontent.com/luismbo/cl-travis/master/install.sh | bash
+
+script:
+  - cd src
+  - sbcl --script yes_my.lisp
+
+notifications:
+  email:
+    - timm@ieee.org
