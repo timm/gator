@@ -44,7 +44,7 @@ alias oks="ell --oks"                         # run all tests once
 alias okspy="rerun 'sh $here/ELL --oks'"      # keep running all tests
 alias ls="ls -G "                             # colorful ls
 
-doc1() {
+top1() {
   cat $here/README.md | gawk '
         BEGIN { FS="\n"; RS="" }
               { print; exit 0  }'
@@ -53,12 +53,12 @@ doc1() {
         NR==1 && $1~/name=top/ { next }
               { print ""; print }'
 }
-docs() {
+tops() {
   f=$(find $here  -type f -newer $here/README.md -name '*.md')
   for g in $f;  do
     h=$(mktemp)
     echo "# updating $g ..."
-    doc1 $g > $h
+    top1 $g > $h
     mv $h $g
   done
 }
@@ -75,7 +75,6 @@ mytmux() {
   tmux splitw -v  -p 5
   tmux selectp -t 2
   tmux send-keys ".  $here/ALL" C-m  "htop"  C-m
-
   tmux attach-session -t $session
 }
 

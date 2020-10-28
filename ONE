@@ -22,8 +22,7 @@ done
 want=$here/docs/lib/top.lisp
 mkdir -p $(dirname $want)
 [ -f "$want" ] || cat<<'EOF'>$want
-(or (fboundp 'env)  (defun env  (x &optional d) (or #+CLISP (ext:getenv x) #+SBCL (sb-unix::posix-getenv x) d)))
-(or (fboundp 'want) (defun uses (f)             (load (format nil "~a/~a" (env "Gator" ".") f))))
+(or (fboundp 'env)  (defun env  (x &optional d) (or #+CLISP (ext:getenv x) #+SBCL (sb-unix::posix-getenv x) d))) (or (fboundp 'want) (defun uses (f)             (load (format nil "~a/~a" (env "Gator" ".") f))))
 EOF
 
 
