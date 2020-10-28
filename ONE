@@ -4,11 +4,25 @@ here=$(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 chmod +x $here/ONE
 chmod +x $here/ALL
 
+for c in sbcl rlwrap gawk; do
+  if [ -z `which $c` ]; then
+     >&2 echo "# W: please install $c"
+  fi
+done
+
+
 sbcl() {
   rlwrap $(which sbcl) --noinform
 }
+
 lisp() {
-  sbcl --script $1 $* 2> >(gawk '1 {print} /^5:/ {exit}') 
+  local b4=$PWD
+  cd $(dirname $1) 
+  local f=$(basename $1)
+  shift
+  $(which sbcl) --script $f $* 2> >(gawk '      {print} 
+                                          /^5:/ {exit}')
+  cd $b4
 }
 (cd $here/src
 for f in $(find . -type f  -name "[[:lower:]]*.lisp"); do
@@ -26,24 +40,6 @@ for f in $(find . -type f  -name "[[:lower:]]*.lisp"); do
   fi
 done
 )
-
-want=$HOME/.gator
-[ -f "$want" ] || cat<<'EOF'>$want
-; vim: noai:ts=2:sw=2:et:
-
-(defvar *gator* "~/gits/timm/gator/src")
-(defvar *gotten* nil)
-
-(defun got(&rest files) 
-  (dolist (file files)
-    (let ((file (format nil "~a/~a" *gator* file)))
-      (unless (member file  *gotten* :test #'equalp)
-        (push file *gotten*)
-        #-sbcl (load file)
-        #+sbcl (handler-bind
-                 ((style-warning #'muffle-warning))
-                 (load file))))))
-EOF
 
 
 want=$here/.gitignore
@@ -71,3 +67,25 @@ tags
 .DS_Store
 EOF
 
+want=$here/.travis.yml
+[ -f "$want" ] || cat<<'EOF'>$want
+language: common-lisp
+sudo: required
+
+env:
+  matrix:
+    - LISP=sbcl
+    - LISP=clisp
+
+install:
+  # Install cl-travis
+  - curl https://raw.githubusercontent.com/luismbo/cl-travis/master/install.sh | bash
+
+script:
+  - cd src
+  - sbcl --script yes_my.lisp
+
+notifications:
+  email:
+    - timm@ieee.org
+EOF

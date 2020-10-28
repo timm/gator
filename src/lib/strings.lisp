@@ -1,7 +1,8 @@
 #|# strings
 |#
-
-(load "~/.gator")
-(got "my")
-(got "my")
+(print 1)
+(load "../lib/my")
+(got "../cols/num")
 (print (my ch skip))
+(print (make-num))
+

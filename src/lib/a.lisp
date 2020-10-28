@@ -4,8 +4,8 @@
 ; 
 ; # asdaasdad  asdas  
 ;     
-
-(uses "cols/num")
+(load "../my")
+(got  "cols/num")
 (defmethod aa(x) (+ x 1))
 (print (make-num))
 

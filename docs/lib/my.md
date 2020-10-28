@@ -1,7 +1,17 @@
 ; vim: noai:ts=2:sw=2:et:
 
-(load "~/.gator")
-(got "lib/macros")
+(defvar *gotten* nil)
+
+(defun got(&rest files) 
+  (dolist (file files)
+    (unless (member file  *gotten* :test #'equalp)
+      (push file *gotten*)
+      #-sbcl (load file)
+      #+sbcl (handler-bind ((style-warning #'muffle-warning)) 
+               (load file)))))
+
+(got "../lib/macros")
+;;;;
 
 (defvar *my*
   '(ch (     skip  #\?
