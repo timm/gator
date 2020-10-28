@@ -54,7 +54,7 @@ top1() {
               { print ""; print }'
 }
 tops() {
-  f=$(find $here  -type f -newer $here/README.md -name '*.md')
+  f=$(find $here  -type f -name '*.md')
   for g in $f;  do
     h=$(mktemp)
     echo "# updating $g ..."
