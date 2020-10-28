@@ -10,3 +10,7 @@
 (defmacro doitems ((one pos lst &optional out) &body body )
   `(let ((,pos -1))
      (dolist (,one ,lst ,out) (incf ,pos) ,@body)))
+
+(defmacro dokv ((k v h &optional out) &body body )
+  `(progn (maphash #'(lambda (,k ,v) ,@body) ,h) ,out))
+

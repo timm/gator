@@ -39,10 +39,11 @@ alias gp="ga;git commit -am save;git push;gs" # end-of-day actions
 alias gs="git status"                         # status
 alias reload='. $here/ALL'                    # reload these tools
 alias vims="vim +PluginInstall +qall"         # install vim plugins
-alias ok="ell --ok "                          # run eone test
-alias oks="ell --oks"                         # run all tests once
-alias okspy="rerun 'sh $here/ELL --oks'"      # keep running all tests
+alias ok="ONE --ok "                          # run eone test
+alias oks="ONE --oks"                         # run all tests once
+alias okspy="rerun 'bash $here/ONE --oks'"    # keep running all tests
 alias ls="ls -G "                             # colorful ls
+
 
 top1() {
   cat $here/README.md | gawk '
@@ -135,7 +136,7 @@ want=$HOME/.vimrc
 	set ruler
 	set laststatus=2
 	set statusline=
-	set statusline+=%F
+	Set statusline+=%F
 	set statusline+=\ 
 	set statusline+=%m
 	set statusline+=%=
@@ -146,6 +147,9 @@ want=$HOME/.vimrc
 	set statusline+=%l
 	set statusline+=\ 
 	set lispwords+=until
+	set lispwords+=doitems
+	set lispwords+=while
+	set lispwords+=with-csv
 	set path+=../**
 	if has("mouse_sgr")
 	    set ttymouse=sgr

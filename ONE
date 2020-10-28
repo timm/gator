@@ -4,11 +4,11 @@ here=$(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 chmod +x $here/ONE
 chmod +x $here/ALL
 
-for c in sbcl rlwrap gawk; do
-  if [ -z `which $c` ]; then
-     >&2 echo "# W: please install $c"
-  fi
-done
+oops() { gawk '
+   /FAIL/ {print "\033[31m"$0"\033[0m" ; next }
+   /PASS/ {print  "\033[32m"$0"\033[0m"; next }
+          {print}'
+}
 
 
 sbcl() {
@@ -41,6 +41,15 @@ for f in $(find . -type f  -name "[[:lower:]]*.lisp"); do
 done
 )
 
+if [ "$1" == "--ok" ]; then
+   lisp $2 | oops
+   exit
+elif [ "$1" == "--oks" ]; then
+   for f in `find src -name "*ok.lisp"`; do
+     lisp $f | oops
+   done | gawk '/FAIL/ { n++} END {exit n>1}'
+   exit
+fi
 
 want=$here/.gitignore
 [ -f "$want" ] || cat<<'EOF'>$want
