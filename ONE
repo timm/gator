@@ -1,41 +1,73 @@
 #!/usr/bin/env bash
+
 here=$(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 chmod +x $here/ONE
 chmod +x $here/ALL
 
-want=$here/docs/lib/top.lisp
-mkdir -p $(dirname $want)
-[ -f "$want" ] || cat<<'EOF'>$want
-(or (fboundp 'env)  (defun env  (x &optional d) (or #+CLISP (ext:getenv x) #+SBCL (sb-unix::posix-getenv x) d))) (or (fboundp 'want) (defun uses (f)             (load (format nil "~a/~a" (env "Gator" ".") f))))
-EOF
-
-for f in $(find $here/docs -type f  -name "[[:lower:]]*.md"); do
-  g=${f%.*}.lisp
-  top=$(cat $here/docs/lib/top.lisp)
+sbcl() {
+  rlwrap $(which sbcl) --noinform
+}
+lisp() {
+  sbcl --script $1 $* 2> >(gawk '1 {print} /^5:/ {exit}') 
+}
+(cd $here/src
+for f in $(find . -type f  -name "[[:lower:]]*.lisp"); do
+  g=$here/docs/${f%.*}.md
  if [ "$f" -nt "$g" ]; then
     echo "f $f g $g"
-    cat $f | gawk -v Top="$top" -v Slash="$here" '
-      BEGIN                               { print Top;  
-                                            Comment="; " }
-      sub(/load "\//,"load \"" Slash "/") {               print $0; next }
-      sub(/```lisp/,"")                   { Comment=""  ; print   ; next }
-      sub(/```/,"")                       { Comment="; "; print   ; next }
-                                          {               print Comment $0 }
+    mkdir -p $(dirname $g)
+    cat $f | gawk  '
+      BEGIN         { Code=0 }
+      sub(/#\|/,"") { if(Code) print("```"); Code=0; print $0; next }
+      sub(/\|#/,"") { Code=1; print("```lisp"); print $0; next }
+                    { print }
+      END           { if(Code) print "```" }
       ' > $g
   fi
 done
+)
+
+want=$HOME/.gator
+[ -f "$want" ] || cat<<'EOF'>$want
+; vim: noai:ts=2:sw=2:et:
+
+(defvar *gator* "~/gits/timm/gator/src")
+(defvar *gotten* nil)
+
+(defun got(&rest files) 
+  (dolist (file files)
+    (let ((file (format nil "~a/~a" *gator* file)))
+      (unless (member file  *gotten* :test #'equalp)
+        (push file *gotten*)
+        #-sbcl (load file)
+        #+sbcl (handler-bind
+                 ((style-warning #'muffle-warning))
+                 (load file))))))
+EOF
+
 
 want=$here/.gitignore
 [ -f "$want" ] || cat<<'EOF'>$want
-*.lisp
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
 *~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+.DS_Store
 EOF
 
-if [ -n "$1" ]; then
-  g=${1%.*}.lisp
-  shift
-  if [ -t 1 ]
-  then         Gator=$here/docs sbcl --script $g $* 2> >(gawk '1 {print} /^5:/ {exit}') 
-  else cat - | Gator=$here/docs sbcl --script $g $* 2> >(gawk '1 {print} /^5:/ {exit}')
-  fi
-fi
