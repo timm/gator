@@ -3,6 +3,12 @@ here=$(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 chmod +x $here/ONE
 chmod +x $here/ALL
 
+want=$here/docs/lib/top.lisp
+mkdir -p $(dirname $want)
+[ -f "$want" ] || cat<<'EOF'>$want
+(or (fboundp 'env)  (defun env  (x &optional d) (or #+CLISP (ext:getenv x) #+SBCL (sb-unix::posix-getenv x) d))) (or (fboundp 'want) (defun uses (f)             (load (format nil "~a/~a" (env "Gator" ".") f))))
+EOF
+
 for f in $(find $here/docs -type f  -name "[[:lower:]]*.md"); do
   g=${f%.*}.lisp
   top=$(cat $here/docs/lib/top.lisp)
@@ -18,13 +24,6 @@ for f in $(find $here/docs -type f  -name "[[:lower:]]*.md"); do
       ' > $g
   fi
 done
-
-want=$here/docs/lib/top.lisp
-mkdir -p $(dirname $want)
-[ -f "$want" ] || cat<<'EOF'>$want
-(or (fboundp 'env)  (defun env  (x &optional d) (or #+CLISP (ext:getenv x) #+SBCL (sb-unix::posix-getenv x) d))) (or (fboundp 'want) (defun uses (f)             (load (format nil "~a/~a" (env "Gator" ".") f))))
-EOF
-
 
 want=$here/.gitignore
 [ -f "$want" ] || cat<<'EOF'>$want
