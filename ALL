@@ -3,6 +3,8 @@ here=$(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 chmod +x $here/ONE
 chmod +x $here/ALL
 
+. ONE 
+
 ######################################
 banner() { cat <<'EOF'
        .-""""-.    
@@ -25,7 +27,7 @@ hello() {
   tput bold; tput setaf 32
   banner
   tput sgr0; tput bold; tput setaf 0
-  awk '/^alias/ {print $0} ' $here/ALL | sort
+  awk '/^alias/ {print $0} ' $here/ALL $here/ONE | sort
   echo ""
   tput sgr0
 }

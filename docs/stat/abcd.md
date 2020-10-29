@@ -11,16 +11,17 @@
 	      (round (* 100 g))
 	      (round (* 100 acc)))))
 
+
 (defmethod update ((i abcd) &aux notpf (zip (float (expt 10 -32))))
   (with-slots (a b c d acc pf prec pd f g n) i
-    (setf acc   (/ (+ a d)        (+ zip a b c d))
-          pf    (/ c              (+ zip a c    ))
-          prec  (/ d              (+ zip c d    ))
-          pd    (/ d              (+ zip b d    ))
-          notpf (- 1 pf)
-          f     (/ (* 2 prec pd)  (+ zip prec pd))
-          g     (/ (* 2 notpf pd) (+ zip notpf pd)))
-    i))
+      (setf acc   (/ (+ a d)        (+ zip a b c d))
+            pf    (/ c              (+ zip a c    ))
+            prec  (/ d              (+ zip c d    ))
+            pd    (/ d              (+ zip b d    ))
+	          notpf (- 1 pf)
+            f     (/ (* 2 prec pd)  (+ zip prec pd))
+            g     (/ (* 2 notpf pd) (+ zip notpf pd))))
+  i)
 
 ;;;;----------------------------------------------------------
 (defstruct abcds (yes 0) (no 0) all)
@@ -34,9 +35,15 @@
   (with-slots (yes no all) i
     (known i actual)
     (known i predicted)
-    (if (equalp actual predicted) (incf yes ) (incf no))
+    (if (equalp actual predicted)
+      (incf yes )
+      (incf no))
     (loop for (target result) on all  by (function cddr) do
           (with-slots (a b c d) result
             (if (eql actual target)
-              (if (eql predicted actual) (incf d) (incf b))
-              (if (eql predicted target) (incf c) (incf a)))))))
+              (if (eql predicted actual)
+                (incf d)
+                (incf b))
+              (if (eql predicted target)
+                (incf c)
+                (incf a)))))))

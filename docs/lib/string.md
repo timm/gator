@@ -5,7 +5,6 @@
 (got  "../lib/macros")
 
 (defun cells (s &optional  (lo 0) (hi (position #\,  s :start (1+ lo))))
-  (print `(lo ,lo hi ,hi))
   (cons (string-trim '(#\Space #\Tab #\Newline) (subseq s lo hi))
         (if hi (cells s (1+ hi)))))
 
@@ -14,8 +13,10 @@
         (if hi (lines s (1+ hi)))))
 
 (defmacro with-csv ((line file) &body body &aux (str (gensym)))
-  `(with-open-file (,str ,file)
-     (while (setf ,line (read-line ,str nil))
-            (setf ,line (cells ,line))
-            ,@body)))
+  `(let (,line)
+     (with-open-file (,str ,file)
+       (while (setf ,line (read-line ,str nil))
+         (when (> (length ,line) 0)
+           (setf ,line (cells ,line))
+           ,@body)))))
 

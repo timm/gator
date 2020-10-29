@@ -6,4 +6,5 @@
           (dolist (line (lines s))
             (print line)))
           
-(with-csv (line "../../data/weather.csv") (print line)) 
+(with-csv (line "../../data/weather.csv") 
+          (print line)) 
