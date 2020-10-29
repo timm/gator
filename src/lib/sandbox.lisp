@@ -6,18 +6,14 @@ defuns get their doco string pulled.
 "
 
 (defmacro while (test &body body) 
-  "while loop"
+  "While loop"
    `(do () ((not ,test)) ,@body))
 
 (defun line1(in) 
-  "pull first line from string"
-  (with-input-from-string (s in) (
-     read-line s nil)))
+  "Pull first line from string"
+  (with-input-from-string (s in) (read-line s nil)))
 
-(defvar toc-txt "- [~(~a~)](#~(~a~)) : ~a~%")  
-(defvar body-txt "
-
-## ~(~a~)
+(defvar *body* "## ~(~a~)
 
 ~a
 
@@ -26,27 +22,21 @@ defuns get their doco string pulled.
 ```lisp
 ~(~S~)
 ```
-</details></ul>~%"
-) 
+</details></ul>~%")
 
-(defun one (x body toc)
-  "low -level worker"
-  (when (stringp x)
-    (format body "~%~a~%" x ))
-  (when (listp x)
-    (when (member (car x) `(defun defmacro defstruct))
-      (let ((f (second x))
-            (a (fourth x)))
-        (format toc  toc-txt  f f (line1 a))
-        (format body body-txt f a x)))))
+(defun reads (&aux x)
+  "Low -level worker"
+  (format t "~a" (with-output-to-string(main)
+    (format t "~a" (with-output-to-string (top)
+      (while (setf x (read-preserving-whitespace t nil))
+        (when (stringp x) 
+          (format main "~%~a~%" x))
+        (when (listp x)
+          (let ((pre (first  x))
+                (f   (second x))
+                (a   (fourth x)))
+            (when (member pre `(defun defmacro defstruct defmethod))
+              (format top "- [~(~a~)](#~(~a~)) : ~a~%" f f (line1 a))
+              (format main *body* f a x))))))))))
 
-(defun fromStdio()
-  (format t "~%~a~%~%" 
-    (with-output-to-string(body)
-      (format t "~%Contents~%~%~a~%"
-        (with-output-to-string (toc)
-          (let (x)
-            (while (setf x (read-preserving-whitespace t nil))
-              (show x body toc))))))))
-
-(fromStdio)
+(reads)
