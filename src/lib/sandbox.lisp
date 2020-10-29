@@ -29,7 +29,7 @@ defuns get their doco string pulled.
 </details></ul>~%"
 ) 
 
-(defun show (x body toc)
+(defun one (x body toc)
   "low -level worker"
   (when (stringp x)
     (format body "~%~a~%" x ))
