@@ -7,10 +7,18 @@
 
 (defmacro ? (x &rest fs) `(getr  slot-value ,x ,@fs))
 
-(defmacro doitems ((one pos lst &optional out) &body body )
-  `(let ((,pos -1))
-     (dolist (,one ,lst ,out) (incf ,pos) ,@body)))
+(defmacro do-nitem ((n item lst &optional out) &body body )
+  `(let ((,n -1))
+     (dolist (,item ,lst ,out) (incf ,n) ,@body)))
 
-(defmacro dokv ((k v h &optional out) &body body )
+(defmacro do-keyval ((k v h &optional out) &body body )
   `(progn (maphash #'(lambda (,k ,v) ,@body) ,h) ,out))
 
+(defmacro do-pair ((k v lst &optional out) &body body)
+  (let ((tmp (gensym)))
+    `(let ((,tmp ,lst))
+       (while ,tmp
+         (let ((,k (car  ,tmp))
+               (,v (cadr ,tmp)))
+           ,@body
+           (setq ,tmp (cddr ,tmp)))))))
