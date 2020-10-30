@@ -11,11 +11,16 @@ oops() { gawk '
 }
 
 doc1() {
-  [ -f "$here/README.md" ] && gawk '
+  if [ -f "$here/README.md" ]; then
+   gawk '
         BEGIN {FS="\n"; RS=""} 
               {print $0; print "\n# '$1'"; exit}' $here/README.md 
+  fi
   cat $1 | lisp $here/src/lib/doc.lisp
-  [ -f "$here/LICENSE.md" ] && cat $here/LICENSE.md
+  if [ -f "$here/LICENSE.md" ]; then
+    echo ""; echo "<hr>"; echo ""
+    cat $here/LICENSE.md
+  fi
 }
 
 sbcl() {
