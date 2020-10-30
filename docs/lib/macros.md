@@ -9,8 +9,6 @@
 - [do-keyval](#do-keyval) : Iterate over all the keys and values in a hash table.
 - [do-pairs](#do-pairs) : Iterate over all the keys and values in a property list.
 
---------
-
 ## Macros
 
 Convenience macros.

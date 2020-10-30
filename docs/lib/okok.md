@@ -3,8 +3,6 @@
 
 # [./lib/okok.lisp](/src/./lib/okok.lisp)
 
---------
-
 <hr>
 
 

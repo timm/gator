@@ -6,8 +6,6 @@
 - [lines](#lines) : Split a string into a list of lines, trimming whitespace.
 - [with-csv](#with-csv) : Iterate over a csv file, returning a list of cells for each row.
 
---------
-
 ### cells
 
 Split a string into a list of cells, trimming whitespace.

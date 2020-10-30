@@ -8,8 +8,6 @@
 - [stop](#stop) : How to halt the program?
 - [sh](#sh) : Run a shell command
 
---------
-
 ## OS Tricks
 
 Operating system specific code.

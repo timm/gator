@@ -3,7 +3,7 @@
 Convert lisp code to markdown.  Strings are printed
 verbatim.  defuns, defmacros, defmethods, defclass,
 defstructs get their doco string pulled, then topped with a
-&nbsp;h3> heading. And a table of contents is added to the top of
+&lt;h3> heading. And a table of contents is added to the top of
 page.
 
 Usage: 
@@ -26,8 +26,8 @@ The system is controlled by two variables:
 "~%### ~(~a~)~%~%~a~% <ul>~%<details><summary>(..)</summary>
 ~%```lisp~%~(~S~)~%```~%</details></ul>~%")
       thing)
- (format  t "~a"             (with-output-to-string (main)
-  (format t "~a~%--------~%" (with-output-to-string (top)
+ (format  t "~a" (with-output-to-string (main)
+  (format t "~a" (with-output-to-string (top)
    (loop while (setf thing (read-preserving-whitespace t nil)) 
     do
     (when (stringp thing) 

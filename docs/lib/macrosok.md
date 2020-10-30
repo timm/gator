@@ -3,8 +3,6 @@
 
 # [./lib/macrosok.lisp](/src/./lib/macrosok.lisp)
 
---------
-
 <hr>
 
 

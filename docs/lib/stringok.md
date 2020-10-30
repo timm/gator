@@ -3,8 +3,6 @@
 
 # [./lib/stringok.lisp](/src/./lib/stringok.lisp)
 
---------
-
 <hr>
 
 
