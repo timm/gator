@@ -32,10 +32,7 @@
 <ul><details><summary>...</summary>
 
 ```lisp
-(defun cells (s &optional (lo 0) (hi (position #\, s :start (1+ lo))))
-  (cons (string-trim '(#\  #\tab #\newline) (subseq s lo hi))
-        (if hi
-            (cells s (1+ hi)))))
+(defun cells)
 ```
 </details></ul>
 
@@ -48,10 +45,7 @@
 <ul><details><summary>...</summary>
 
 ```lisp
-(defun lines (s &optional (lo 0) (hi (position #\newline s :start (1+ lo))))
-  (cons (cells (subseq s lo hi))
-        (if hi
-            (lines s (1+ hi)))))
+(defun lines)
 ```
 </details></ul>
 
@@ -65,11 +59,7 @@
 <ul><details><summary>...</summary>
 
 ```lisp
-(defmacro with-csv ((line file) &body body &aux (str (gensym)))
-  `(let (,line)
-     (with-open-file (,str ,file)
-       (while (setf ,line (read-line ,str nil))
-        (when (> (length ,line) 0) (setf ,line (cells ,line)) ,@body)))))
+(defmacro with-csv)
 ```
 </details></ul>
 
