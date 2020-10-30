@@ -1,7 +1,7 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# [./lib/os.lisp](/src/lib/os.lisp)
+# [./lib/os.lisp](/src/./lib/os.lisp)
 - [klass-slots](#klass-slots) : What are the slots of a class?
 - [klass-slot-definition-name](#klass-slot-definition-name) : What is a slot's name?
 - [args](#args) : What are the command line args?

@@ -1,7 +1,7 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# [./lib/macros.lisp](/src/lib/os.lisp)
+# [./lib/macros.lisp](/src/./lib/macros.lisp)
 - [while](#while) : A simple while loop.
 - [getr](#getr) : Recursive accessor.
 - [?](#?) : Simple accessors to nested slots.

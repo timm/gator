@@ -1,7 +1,7 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# [./lib/string.lisp](/src/lib/os.lisp)
+# [./lib/string.lisp](/src/./lib/string.lisp)
 - [cells](#cells) : Split a string into a list of cells, trimming whitespace.
 - [lines](#lines) : Split a string into a list of lines, trimming whitespace.
 - [with-csv](#with-csv) : Iterate over a csv file, returning a list of cells for each row.
