@@ -11,8 +11,13 @@ oops() { gawk '
 }
 
 doc1() {
+  [ -f "$here/README.md" ] && gawk '
+        BEGIN {FS="\n"; RS=""} 
+              {print $0; print "\n# '$1'"; exit}' $here/README.md 
   cat $1 | lisp $here/src/lib/doc.lisp
+  [ -f "$here/LICENSE.md" ] && cat $here/LICENSE.md
 }
+
 sbcl() {
   rlwrap $(which sbcl) --noinform
 }

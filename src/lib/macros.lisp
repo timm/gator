@@ -1,5 +1,7 @@
 ; vim: noai:ts=2:sw=2:et:
-"Convenience macros."
+"# Macros
+
+Convenience macros."
 
 (defmacro while (test &body body) 
   "A simple while loop."
