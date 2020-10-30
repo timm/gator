@@ -2,37 +2,19 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # ./lib/string.lisp
-- [cells](#cells) : (CONS
-                     (STRING-TRIM
-                      '(  	 
-)
-                      (SUBSEQ S LO HI))
-                     (IF HI
-                         (CELLS S (1+ HI))))
-- [lines](#lines) : (CONS (CELLS (SUBSEQ S LO HI))
-                          (IF HI
-                              (LINES S (1+ HI))))
-- [with-csv](#with-csv) : `(LET (,LINE)
-                             (WITH-OPEN-FILE (,STR ,FILE)
-                               (WHILE (SETF ,LINE (READ-LINE ,STR NIL))
-                                (WHEN (> (LENGTH ,LINE) 0)
-                                  (SETF ,LINE (CELLS ,LINE))
-                                  ,@BODY))))
+- [cells](#cells) : Split a string into a list of cells, trimming whitespace.
+- [lines](#lines) : Split a string into a list of lines, trimming whitespace.
+- [with-csv](#with-csv) : Iterate over a csv file, returning a list of cells for each row.
 
 ### cells
 
-(CONS
- (STRING-TRIM
-  '(  	 
-)
-  (SUBSEQ S LO HI))
- (IF HI
-     (CELLS S (1+ HI))))
+Split a string into a list of cells, trimming whitespace.
 
 <ul><details><summary>...</summary>
 
 ```lisp
 (defun cells (s &optional (lo 0) (hi (position #\, s :start (1+ lo))))
+  "split a string into a list of cells, trimming whitespace."
   (cons (string-trim '(#\  #\tab #\newline) (subseq s lo hi))
         (if hi
             (cells s (1+ hi)))))
@@ -41,14 +23,13 @@
 
 ### lines
 
-(CONS (CELLS (SUBSEQ S LO HI))
-      (IF HI
-          (LINES S (1+ HI))))
+Split a string into a list of lines, trimming whitespace.
 
 <ul><details><summary>...</summary>
 
 ```lisp
 (defun lines (s &optional (lo 0) (hi (position #\newline s :start (1+ lo))))
+  "split a string into a list of lines, trimming whitespace."
   (cons (cells (subseq s lo hi))
         (if hi
             (lines s (1+ hi)))))
@@ -57,15 +38,13 @@
 
 ### with-csv
 
-`(LET (,LINE)
-   (WITH-OPEN-FILE (,STR ,FILE)
-     (WHILE (SETF ,LINE (READ-LINE ,STR NIL))
-      (WHEN (> (LENGTH ,LINE) 0) (SETF ,LINE (CELLS ,LINE)) ,@BODY))))
+Iterate over a csv file, returning a list of cells for each row.
 
 <ul><details><summary>...</summary>
 
 ```lisp
 (defmacro with-csv ((line file) &body body &aux (str (gensym)))
+  "iterate over a csv file, returning a list of cells for each row."
   `(let (,line)
      (with-open-file (,str ,file)
        (while (setf ,line (read-line ,str nil))
