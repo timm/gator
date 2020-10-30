@@ -3,6 +3,11 @@
 
 # ./lib/okok.lisp
 
+--------
+
+<hr>
+
+
 ## License
 
 Gator   

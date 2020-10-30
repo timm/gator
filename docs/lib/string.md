@@ -6,15 +6,17 @@
 - [lines](#lines) : Split a string into a list of lines, trimming whitespace.
 - [with-csv](#with-csv) : Iterate over a csv file, returning a list of cells for each row.
 
+--------
+
 ### cells
 
 Split a string into a list of cells, trimming whitespace.
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
 (defun cells (s &optional (lo 0) (hi (position #\, s :start (1+ lo))))
-  "split a string into a list of cells, trimming whitespace."
+  ""
   (cons (string-trim '(#\  #\tab #\newline) (subseq s lo hi))
         (if hi
             (cells s (1+ hi)))))
@@ -24,12 +26,12 @@ Split a string into a list of cells, trimming whitespace.
 ### lines
 
 Split a string into a list of lines, trimming whitespace.
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
 (defun lines (s &optional (lo 0) (hi (position #\newline s :start (1+ lo))))
-  "split a string into a list of lines, trimming whitespace."
+  ""
   (cons (cells (subseq s lo hi))
         (if hi
             (lines s (1+ hi)))))
@@ -39,18 +41,21 @@ Split a string into a list of lines, trimming whitespace.
 ### with-csv
 
 Iterate over a csv file, returning a list of cells for each row.
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
 (defmacro with-csv ((line file) &body body &aux (str (gensym)))
-  "iterate over a csv file, returning a list of cells for each row."
+  ""
   `(let (,line)
      (with-open-file (,str ,file)
        (while (setf ,line (read-line ,str nil))
         (when (> (length ,line) 0) (setf ,line (cells ,line)) ,@body)))))
 ```
 </details></ul>
+
+<hr>
+
 
 ## License
 

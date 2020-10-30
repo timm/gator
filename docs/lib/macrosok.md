@@ -3,6 +3,11 @@
 
 # ./lib/macrosok.lisp
 
+--------
+
+<hr>
+
+
 ## License
 
 Gator   

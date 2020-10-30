@@ -5,17 +5,19 @@
 - [ok](#ok) : Print PASS if want==got else FAIL. Trap and ignore errors.
 - [dofun](#dofun) : Run this code as a side effect of loading the file
 
+--------
+
 ## Unit test engine
 
 ### ok
 
 Print PASS if want==got else FAIL. Trap and ignore errors.
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
 (defmacro ok (want got &optional (msg "") &rest txt &aux (c (gensym)))
-  "print pass if want==got else fail. trap and ignore errors."
+  ""
   `(let (,c)
      (handler-case
       (progn
@@ -30,19 +32,21 @@ Print PASS if want==got else FAIL. Trap and ignore errors.
 
 Run this code as a side effect of loading the file
    (trapping and ignoring errors)
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
 (defmacro dofun (name args &body body &aux (c (gensym)))
-  "run this code as a side effect of loading the file
-   (trapping and ignoring errors)"
+  ""
   `(let (,c)
      (progn
       (setf (my yes it) ',name)
       (handler-case (funcall (lambda ,args ,@body))))))
 ```
 </details></ul>
+
+<hr>
+
 
 ## License
 

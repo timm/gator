@@ -3,6 +3,11 @@
 
 # ./lib/stringok.lisp
 
+--------
+
+<hr>
+
+
 ## License
 
 Gator   

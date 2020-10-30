@@ -8,6 +8,8 @@
 - [stop](#stop) : How to halt the program?
 - [sh](#sh) : Run a shell command
 
+--------
+
 ## OS Tricks
 
 Operating system specific code.
@@ -15,63 +17,62 @@ Operating system specific code.
 ### klass-slots
 
 What are the slots of a class?
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
-(defun klass-slots (it)
-  "what are the slots of a class?"
-  (sb-mop:class-slots (class-of it)))
+(defun klass-slots (it) "" (sb-mop:class-slots (class-of it)))
 ```
 </details></ul>
 
 ### klass-slot-definition-name
 
 What is a slot's name?
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
-(defun klass-slot-definition-name (x)
-  "what is a slot's name?"
-  (sb-mop:slot-definition-name x))
+(defun klass-slot-definition-name (x) "" (sb-mop:slot-definition-name x))
 ```
 </details></ul>
 
 ### args
 
 What are the command line args?
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
-(defun args () "what are the command line args?" *posix-argv*)
+(defun args () "" *posix-argv*)
 ```
 </details></ul>
 
 ### stop
 
 How to halt the program?
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
-(defun stop () "how to halt the program?" (exit))
+(defun stop () "" (exit))
 ```
 </details></ul>
 
 ### sh
 
 Run a shell command
-
-<ul><details><summary>...</summary>
+ <ul>
+<details><summary>(..)</summary>
 
 ```lisp
 (defun sh (cmd)
-  "run a shell command"
+  ""
   (run-program "/bin/sh" (list "-c" cmd) :input nil :output *standard-output*))
 ```
 </details></ul>
+
+<hr>
+
 
 ## License
 
