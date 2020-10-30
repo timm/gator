@@ -8,11 +8,18 @@ Convenience macros."
   `(do () ((not ,test)) ,@body))
 
 (defmacro getr (how obj f &rest fs)
-  "Recursive accessor."
   (if fs `(getr ,how (,how ,obj ',f) ,@fs) `(,how ,obj ',f)))
 
 (defmacro ? (x &rest fs) 
   "Simple accessors to nested slots."
+  
+  e.g.
+
+      \* (macroexpand '(? x address suburb zipcode))
+      (SLOT-VALUE (SLOT-VALUE (SLOT-VALUE X 'ADDRESS) 'SUBURB) 'ZIPCODE)
+  
+  "
+
   `(getr  slot-value ,x ,@fs))
 
 (defmacro do-items ((n item lst &optional out) &body body )
