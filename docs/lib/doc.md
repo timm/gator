@@ -13,6 +13,10 @@ defstructs get their doco string pulled, they topped with a
 <h2> heading. And a table of contents is added to the top of
 page.
 
+Usage: 
+
+    cat file.lisp | lisp doc.lisp
+
 The system is controlled by two variables:
 
 - The `want` variable.
