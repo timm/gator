@@ -6,6 +6,8 @@ defstructs get their doco string pulled, then topped with a
 &lt;h3> heading. And a table of contents is added to the top of
 page.
 
+Note: 30 lines of code! :wink:
+
 Usage: 
 
     cat file.lisp | lisp doc.lisp
