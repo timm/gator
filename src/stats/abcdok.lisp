@@ -1,0 +1,10 @@
+(load "../my")
+(load "../lib/ok")
+(load "../stats/abcd")
+
+(let ((a (make-abcds)))
+  (print a)
+  (dotimes(i 6) (adds a 'y 'y))
+  (dotimes(i 2) (adds a 'n 'n))
+  (dotimes(i 5) (adds a 'm 'm))
+  (adds a 'm 'n))
