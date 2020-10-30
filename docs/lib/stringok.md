@@ -1,7 +1,7 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# ./lib/stringok.lisp
+# [./lib/stringok.lisp](/src/lib/os.lisp)
 
 --------
 

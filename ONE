@@ -14,7 +14,7 @@ doc1() {
   if [ -f "$here/README.md" ]; then
    gawk '
         BEGIN {FS="\n"; RS=""} 
-              {print $0; print "\n# '$1'"; exit}' $here/README.md 
+              {print $0; print "\n# ['$1'](/src/lib/os.lisp)"; exit}' $here/README.md 
   fi
   cat $1 | lisp $here/src/lib/doc.lisp
   if [ -f "$here/LICENSE.md" ]; then

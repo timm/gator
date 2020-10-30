@@ -1,7 +1,7 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# ./lib/ok.lisp
+# [./lib/ok.lisp](/src/lib/os.lisp)
 - [ok](#ok) : Print PASS if want==got else FAIL. Trap and ignore errors.
 - [dofun](#dofun) : Run this code as a side effect of loading the file
 
