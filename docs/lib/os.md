@@ -70,9 +70,10 @@ Run a shwll command
   (run-program "/bin/sh" (list "-c" cmd) :input nil :output *standard-output*))
 ```
 </details></ul>
+
 ## License
 
-Gator
+Gator   
 &copy; 2020, Tim Menzies
 
 Permission is hereby granted, free of charge, to any person obtaining

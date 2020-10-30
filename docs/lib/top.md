@@ -2,9 +2,10 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # ./lib/top.lisp
+
 ## License
 
-Gator
+Gator   
 &copy; 2020, Tim Menzies
 
 Permission is hereby granted, free of charge, to any person obtaining

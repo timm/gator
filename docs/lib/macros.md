@@ -99,9 +99,10 @@ Iterate over all the keys and values in a property list.
        ,out)))
 ```
 </details></ul>
+
 ## License
 
-Gator
+Gator   
 &copy; 2020, Tim Menzies
 
 Permission is hereby granted, free of charge, to any person obtaining

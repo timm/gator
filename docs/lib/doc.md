@@ -10,9 +10,10 @@ verbatim.  defuns, defmacros, defmethods, defclass,
 defstructs get their doco string pulled, they topped with a
 <h2> heading. And a table of contents is added to the top of
 page.
+
 ## License
 
-Gator
+Gator   
 &copy; 2020, Tim Menzies
 
 Permission is hereby granted, free of charge, to any person obtaining

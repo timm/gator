@@ -72,9 +72,10 @@
         (when (> (length ,line) 0) (setf ,line (cells ,line)) ,@body)))))
 ```
 </details></ul>
+
 ## License
 
-Gator
+Gator   
 &copy; 2020, Tim Menzies
 
 Permission is hereby granted, free of charge, to any person obtaining

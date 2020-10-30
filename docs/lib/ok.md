@@ -41,9 +41,10 @@ Run this code as a side effect of loading the file
       (handler-case (funcall (lambda ,args ,@body))))))
 ```
 </details></ul>
+
 ## License
 
-Gator
+Gator   
 &copy; 2020, Tim Menzies
 
 Permission is hereby granted, free of charge, to any person obtaining
