@@ -1,20 +1,25 @@
-; vim: noai:ts=2:sw=2:et:
+"##  My simple documenter
 
-(load "../lib/macros")
-(load "../lib/os")
+Convert lisp code to markdown.  Strings are printed
+verbatim.  defuns, defmacros, defmethods, defclass,
+defstructs get their doco string pulled, they topped with a
+<h2> heading. And a table of contents is added to the top of
+page."
 
-(defun macrop (x)  (and (listp x) (eql (first x) 'defmacro)))
-(defun funp (x)    (and (listp x) (eql (first x) 'defun)))
-(defun strucpx)    (and (listp x) (eql (first x) 'defstruct)))
-
-(let ((b4 :comment))
-   (cond ((stringp s) (print s))
-         ((macrop  s) (print  
-     (string (print 1))
-
-(defun reads (f)
-  (with-open-file (s f)(while (setf x (read s nil)) (print x)))
-
-(let ((cli (args)))
-  (if (and cli (member "--makedoc" cli :test #'equalp))
-    (readme)))
+(let (thing
+      (want '((defun    . 3) (defclass  . 3)
+              (defmacro . 3) (defstruct . 2) (defmethod . 3)))
+      (fmt  "~%## ~(~a~)~%~%~a~%~%<ul><details>~%~%```lisp~%~(~S~)~%```~%</details></ul>~%"))
+ (format  t "~a" (with-output-to-string (main)
+  (format t "~a" (with-output-to-string (top)
+   (loop while (setf thing (read-preserving-whitespace t nil)) 
+    do
+    (if (stringp thing) 
+        (format main "~%~a~%" thing)
+        (when (member (car thing) want :key #'car)
+          (let* ((x (first  thing))
+                 (f (second thing))
+                 (s (elt    thing (cdr (assoc x want)))))
+            (format main fmt f s thing)
+            (format top "- [~(~a~)](#~(~a~)) : ~a~%" 
+                    f f (subseq s 0 (position #\Newline s))))))))))))

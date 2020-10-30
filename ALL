@@ -3,7 +3,7 @@ here=$(cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 chmod +x $here/ONE
 chmod +x $here/ALL
 
-. ONE 
+. $here/ONE 
 
 ######################################
 banner() { cat <<'EOF'
@@ -148,10 +148,12 @@ want=$HOME/.vimrc
 	set statusline+=:
 	set statusline+=%l
 	set statusline+=\ 
+	set lispwords+=do-pairs
 	set lispwords+=until
 	set lispwords+=doitems
 	set lispwords+=while
 	set lispwords+=with-csv
+	set lispwords+=do-pairs
 	set path+=../**
 	if has("mouse_sgr")
 	    set ttymouse=sgr

@@ -1,6 +1,6 @@
 ; vim: noai:ts=2:sw=2:et:
 
-(load "../lib/my")
+(load "../my")
 (got "../lib/ok")
 
 (dofun test1 () (print 33) (ok 1 (/ 2 0) "asds"))

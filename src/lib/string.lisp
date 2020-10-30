@@ -1,7 +1,7 @@
 ; vim: noai:ts=2:sw=2:et:
 ; find cells (seperated by commans)  in lines in csv file
 
-(load "../lib/my")
+(load "../my")
 (got  "../lib/macros")
 
 (defun cells (s &optional  (lo 0) (hi (position #\,  s :start (1+ lo))))

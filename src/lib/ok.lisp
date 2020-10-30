@@ -1,6 +1,6 @@
 ; vim: noai:ts=2:sw=2:et:
 
-(load "../lib/my")
+(load "../my")
 
 (defmacro ok (want got &optional (msg "") &rest txt &aux (c (gensym)))
   "Print PASS if want==got else FAIL. Trap and ignore errors."

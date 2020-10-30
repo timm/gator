@@ -4,7 +4,7 @@
           I like traffic lights.
           Especially when,     they are green"))
           (dolist (line (lines s))
-            (print line)))
-          
+            (format t "~&~a~%" line)))
+         
 (with-csv (line "../../data/weather.csv") 
-          (print line)) 
+          (format t "~&~a~%" line)) 

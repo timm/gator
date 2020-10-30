@@ -10,7 +10,7 @@
       #+sbcl (handler-bind ((style-warning #'muffle-warning)) 
                (load file)))))
 
-(got "lib/macros")
+(got "../lib/macros")
 ;;;;
 
 (defvar *my*

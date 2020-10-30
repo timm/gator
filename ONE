@@ -10,7 +10,9 @@ oops() { gawk '
           {print}'
 }
 
-
+doc1() {
+  cat $1 | lisp $here/src/lib/doc.lisp
+}
 sbcl() {
   rlwrap $(which sbcl) --noinform
 }
@@ -30,13 +32,7 @@ for f in $(find . -type f  -name "[[:lower:]]*.lisp"); do
  if [ "$f" -nt "$g" ]; then
     echo "f $f g $g"
     mkdir -p $(dirname $g)
-    cat $f | gawk  '
-      BEGIN         { Code=0 }
-      sub(/#\|/,"") { if(Code) print("```"); Code=0; print $0; next }
-      sub(/\|#/,"") { Code=1; print("```lisp"); print $0; next }
-                    { print }
-      END           { if(Code) print "```" }
-      ' > $g
+    doc1 $f > $g
   fi
 done
 )
