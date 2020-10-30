@@ -2,6 +2,90 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # [./lib/macros.lisp](/src/./lib/macros.lisp)
+- [while](#while) : A simple while loop.
+- [?](#?) : Simple accessors to nested slots.
+- [do-items](#do-items) : Iterate over all positions and items in a list.
+- [do-keyval](#do-keyval) : Iterate over all the keys and values in a hash table.
+- [do-pairs](#do-pairs) : Iterate over all the keys and values in a property list.
+
+## Macros
+
+Convenience macros.
+
+### while
+
+A simple while loop.
+ <ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defmacro while (test &body body) "" `(do () ((not ,test)) ,@body))
+```
+</details></ul>
+
+### ?
+
+Simple accessors to nested slots.
+  
+  e.g.
+
+      * (macroexpand '(? x address suburb zipcode))
+      (SLOT-VALUE (SLOT-VALUE (SLOT-VALUE X 'ADDRESS) 'SUBURB) 'ZIPCODE)
+  
+  
+ <ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defmacro ? (x &rest fs) "" `(getr slot-value ,x ,@fs))
+```
+</details></ul>
+
+### do-items
+
+Iterate over all positions and items in a list.
+ <ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defmacro do-items ((n item lst &optional out) &body body)
+  ""
+  `(let ((,n -1))
+     (dolist (,item ,lst ,out) (incf ,n) ,@body)))
+```
+</details></ul>
+
+### do-keyval
+
+Iterate over all the keys and values in a hash table.
+ <ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defmacro do-keyval ((k v h &optional out) &body body)
+  ""
+  `(progn (maphash #'(lambda (,k ,v) ,@body) ,h) ,out))
+```
+</details></ul>
+
+### do-pairs
+
+Iterate over all the keys and values in a property list.
+ <ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defmacro do-pairs ((k v lst &optional out) &body body)
+  ""
+  (let ((tmp (gensym)))
+    `(let ((,tmp ,lst))
+       (while ,tmp
+        (let ((,k (car ,tmp)) (,v (cadr ,tmp)))
+          ,@body
+          (setq ,tmp (cddr ,tmp))))
+       ,out)))
+```
+</details></ul>
 
 <hr>
 

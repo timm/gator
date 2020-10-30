@@ -11,7 +11,7 @@ Convenience macros."
   (if fs `(getr ,how (,how ,obj ',f) ,@fs) `(,how ,obj ',f)))
 
 (defmacro ? (x &rest fs) 
-  "Simple accessors to nested slots."
+  "Simple accessors to nested slots.
   
   e.g.
 
@@ -19,7 +19,6 @@ Convenience macros."
       (SLOT-VALUE (SLOT-VALUE (SLOT-VALUE X 'ADDRESS) 'SUBURB) 'ZIPCODE)
   
   "
-
   `(getr  slot-value ,x ,@fs))
 
 (defmacro do-items ((n item lst &optional out) &body body )
