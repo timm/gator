@@ -20,7 +20,9 @@ A simple while loop.
 <ul><details><summary>...</summary>
 
 ```lisp
-(defmacro while `(do () ((not ,test)) ,@body))
+(defmacro while (test &body body)
+  "a simple while loop."
+  `(do () ((not ,test)) ,@body))
 ```
 </details></ul>
 
@@ -31,7 +33,11 @@ Recursive accessor.
 <ul><details><summary>...</summary>
 
 ```lisp
-(defmacro getr (if fs `(getr ,how (,how ,obj ',f) ,@fs) `(,how ,obj ',f)))
+(defmacro getr (how obj f &rest fs)
+  "recursive accessor."
+  (if fs
+      `(getr ,how (,how ,obj ',f) ,@fs)
+      `(,how ,obj ',f)))
 ```
 </details></ul>
 
@@ -42,7 +48,9 @@ Simple accessors to nested slots.
 <ul><details><summary>...</summary>
 
 ```lisp
-(defmacro ? `(getr slot-value ,x ,@fs))
+(defmacro ? (x &rest fs)
+  "simple accessors to nested slots."
+  `(getr slot-value ,x ,@fs))
 ```
 </details></ul>
 
@@ -53,9 +61,10 @@ Iterate over all positions and items in a list.
 <ul><details><summary>...</summary>
 
 ```lisp
-(defmacro do-items
-          `(let ((,n -1))
-             (dolist (,item ,lst ,out) (incf ,n) ,@body)))
+(defmacro do-items ((n item lst &optional out) &body body)
+  "iterate over all positions and items in a list."
+  `(let ((,n -1))
+     (dolist (,item ,lst ,out) (incf ,n) ,@body)))
 ```
 </details></ul>
 
@@ -66,7 +75,9 @@ Iterate over all the keys and values in a hash table.
 <ul><details><summary>...</summary>
 
 ```lisp
-(defmacro do-keyval `(progn (maphash #'(lambda (,k ,v) ,@body) ,h) ,out))
+(defmacro do-keyval ((k v h &optional out) &body body)
+  "iterate over all the keys and values in a hash table."
+  `(progn (maphash #'(lambda (,k ,v) ,@body) ,h) ,out))
 ```
 </details></ul>
 
@@ -77,14 +88,15 @@ Iterate over all the keys and values in a property list.
 <ul><details><summary>...</summary>
 
 ```lisp
-(defmacro do-pairs
-          (let ((tmp (gensym)))
-           `(let ((,tmp ,lst))
-              (while ,tmp
-               (let ((,k (car ,tmp)) (,v (cadr ,tmp)))
-                 ,@body
-                 (setq ,tmp (cddr ,tmp))))
-              ,out)))
+(defmacro do-pairs ((k v lst &optional out) &body body)
+  "iterate over all the keys and values in a property list."
+  (let ((tmp (gensym)))
+    `(let ((,tmp ,lst))
+       (while ,tmp
+        (let ((,k (car ,tmp)) (,v (cadr ,tmp)))
+          ,@body
+          (setq ,tmp (cddr ,tmp))))
+       ,out)))
 ```
 </details></ul>
 

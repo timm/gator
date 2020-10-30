@@ -20,8 +20,7 @@ page."
       (when (member (car thing) want :key #'car)
         (let* ((x      (first  thing))
                (f      (second thing))
-               (s      (elt    thing (cdr (assoc x want))))
-               (thing `(,(pop thing) ,(pop thing) ,@(cddr thing))))
+               (s      (elt    thing (cdr (assoc x want)))))
           (format main fmt f s thing)
           (format top "- [~(~a~)](#~(~a~)) : ~a~%" 
                   f f (subseq s 0 (position #\Newline s))))))))))))
