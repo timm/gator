@@ -19,7 +19,7 @@
                                   (SETF ,LINE (CELLS ,LINE))
                                   ,@BODY))))
 
-## cells
+### cells
 
 (CONS
  (STRING-TRIM
@@ -39,7 +39,7 @@
 ```
 </details></ul>
 
-## lines
+### lines
 
 (CONS (CELLS (SUBSEQ S LO HI))
       (IF HI
@@ -55,7 +55,7 @@
 ```
 </details></ul>
 
-## with-csv
+### with-csv
 
 `(LET (,LINE)
    (WITH-OPEN-FILE (,STR ,FILE)

@@ -10,7 +10,7 @@
 
 Operating system specific code.
 
-## klass-slots
+### klass-slots
 
 what are the slots of a class?
 
@@ -23,7 +23,7 @@ what are the slots of a class?
 ```
 </details></ul>
 
-## klass-slot-definition-name
+### klass-slot-definition-name
 
 what is a slot's name?
 
@@ -36,7 +36,7 @@ what is a slot's name?
 ```
 </details></ul>
 
-## args
+### args
 
 what are the command line args?
 
@@ -47,7 +47,7 @@ what are the command line args?
 ```
 </details></ul>
 
-## stop
+### stop
 
 how to halt the program?
 
@@ -58,7 +58,7 @@ how to halt the program?
 ```
 </details></ul>
 
-## sh
+### sh
 
 Run a shwll command
 

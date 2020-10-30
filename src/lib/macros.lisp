@@ -1,5 +1,5 @@
 ; vim: noai:ts=2:sw=2:et:
-"# Macros
+"## Macros
 
 Convenience macros."
 

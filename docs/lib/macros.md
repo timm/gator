@@ -9,11 +9,11 @@
 - [do-keyval](#do-keyval) : Iterate over all the keys and values in a hash table.
 - [do-pairs](#do-pairs) : Iterate over all the keys and values in a property list.
 
-# Macros
+## Macros
 
 Convenience macros.
 
-## while
+### while
 
 A simple while loop.
 
@@ -26,7 +26,7 @@ A simple while loop.
 ```
 </details></ul>
 
-## getr
+### getr
 
 Recursive accessor.
 
@@ -41,7 +41,7 @@ Recursive accessor.
 ```
 </details></ul>
 
-## ?
+### ?
 
 Simple accessors to nested slots.
 
@@ -54,7 +54,7 @@ Simple accessors to nested slots.
 ```
 </details></ul>
 
-## do-items
+### do-items
 
 Iterate over all positions and items in a list.
 
@@ -68,7 +68,7 @@ Iterate over all positions and items in a list.
 ```
 </details></ul>
 
-## do-keyval
+### do-keyval
 
 Iterate over all the keys and values in a hash table.
 
@@ -81,7 +81,7 @@ Iterate over all the keys and values in a hash table.
 ```
 </details></ul>
 
-## do-pairs
+### do-pairs
 
 Iterate over all the keys and values in a property list.
 
