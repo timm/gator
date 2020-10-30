@@ -4,15 +4,24 @@ Convert lisp code to markdown.  Strings are printed
 verbatim.  defuns, defmacros, defmethods, defclass,
 defstructs get their doco string pulled, they topped with a
 <h2> heading. And a table of contents is added to the top of
-page."
+page.
 
-(let (thing
-      (want '((defun    . 3) (defclass  . 3)
+The system is controlled by two variables:
+
+- The `want` variable.
+  An entry (e.g.) `(defun . 3)` says that we will display lists
+  starting with `defun` if it has a doc string as element `3`
+  (which means the fourth thing in the list).
+- The `fmt` variable which controls how we render something's
+  name and doc string.
+"
+
+(let ((want '((defun    . 3) (defclass  . 3)
               (defmacro . 3) (defstruct . 2) (defmethod . 3)))
       (fmt  
 "~%### ~(~a~)~%~%~a~% <ul>~%<details><summary>(..)</summary>
 ~%```lisp~%~(~S~)~%```~%</details></ul>~%")
-      )
+      thing)
  (format  t "~a"             (with-output-to-string (main)
   (format t "~a~%--------~%" (with-output-to-string (top)
    (loop while (setf thing (read-preserving-whitespace t nil)) 

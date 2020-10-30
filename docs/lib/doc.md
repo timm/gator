@@ -13,6 +13,16 @@ defstructs get their doco string pulled, they topped with a
 <h2> heading. And a table of contents is added to the top of
 page.
 
+The system is controlled by two variables:
+
+- The `want` variable.
+  An entry (e.g.) `(defun . 3)` says that we will display lists
+  starting with `defun` if it has a doc string as element `3`
+  (which means the fourth thing in the list).
+- The `fmt` variable which controls how we render something's
+  name and doc string.
+
+
 <hr>
 
 
