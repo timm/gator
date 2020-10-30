@@ -9,9 +9,10 @@ page."
 (let (thing
       (want '((defun    . 3) (defclass  . 3)
               (defmacro . 3) (defstruct . 2) (defmethod . 3)))
-      (fmt  "~%### ~(~a~)~%~%~a~%
-             <ul>~%<details><summary>...</summary>
-             ~%```lisp~%~(~S~)~%```~%</details></ul>~%"))
+      (fmt  
+"~%### ~(~a~)~%~%~a~% <ul>~%<details><summary>...</summary>
+~%```lisp~%~(~S~)~%```~%</details></ul>~%")
+      )
  (format  t "~a" (with-output-to-string (main)
   (format t "~a" (with-output-to-string (top)
    (loop while (setf thing (read-preserving-whitespace t nil)) 

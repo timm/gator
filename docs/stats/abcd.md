@@ -13,10 +13,9 @@
 ### abcd
 
 holder for results of one class
-
-             <ul>
+ <ul>
 <details><summary>...</summary>
-             
+
 ```lisp
 (defstruct abcd "" target (a 0) (b 0) (c 0) (d 0) acc pf prec pd f g)
 ```
@@ -25,10 +24,9 @@ holder for results of one class
 ### print-object
 
 Print an abcd
-
-             <ul>
+ <ul>
 <details><summary>...</summary>
-             
+
 ```lisp
 (defmethod print-object ((i abcd) str)
   ""
@@ -44,10 +42,9 @@ Print an abcd
 ### adds
 
 Given actual and predicted, update one set of results.
-
-             <ul>
+ <ul>
 <details><summary>...</summary>
-             
+
 ```lisp
 (defmethod adds ((i abcd) actual predicted)
   ""
@@ -66,10 +63,9 @@ Given actual and predicted, update one set of results.
 ### update
 
 Reset all the derived cacls of this result.
-
-             <ul>
+ <ul>
 <details><summary>...</summary>
-             
+
 ```lisp
 (defmethod update ((i abcd) &aux notpf (zip (float (expt 10 -32))))
   ""
@@ -89,10 +85,9 @@ Reset all the derived cacls of this result.
 ### abcds
 
 Holder for mutiple results
-
-             <ul>
+ <ul>
 <details><summary>...</summary>
-             
+
 ```lisp
 (defstruct abcds "" (yes 0) (no 0) all)
 ```
@@ -102,10 +97,9 @@ Holder for mutiple results
 
 Ensure that resuts for `x` exists. 
    Set `a` to everything missed so far.
-
-             <ul>
+ <ul>
 <details><summary>...</summary>
-             
+
 ```lisp
 (defmethod known ((i abcds) x)
   ""
@@ -119,10 +113,9 @@ Ensure that resuts for `x` exists.
 ### adds
 
 Given actual and predicted, update all results.
-
-             <ul>
+ <ul>
 <details><summary>...</summary>
-             
+
 ```lisp
 (defmethod adds ((i abcds) actual predicted)
   ""
