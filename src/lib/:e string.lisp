@@ -22,15 +22,16 @@ get their doco string pulled.  "
   "Pull first line from string"
   (with-input-from-string (s in) (read-line s nil)))
 
-(format t "~a" (with-output-to-string(main)
+(format t "~a" (with-output-to-string (main)
   (format t "~a" (with-output-to-string (top)
     (while (setf x (read-preserving-whitespace t nil))
       (when (stringp x) 
         (format main "~%~a~%" x))
       (when (listp x)
-        (let ((pre (first  x))
-              (f   (second x))
-              (a   (fourth x)))
-          (when (member pre `(defun defmacro defstruct defmethod))
-            (format top "- [~(~a~)](#~(~a~)) : ~a~%" f f (line1 a))
-            (format main *body* f a x)))))))))
+        (let ((what (first  x))
+              (fun   (second x))
+              (doc   (fourth x)))
+          (when (member what `(defun defmacro defstruct defmethod))
+            (format top "- [~(~a~)](#~(~a~)) : ~a~%" fun fun 
+                        (subseq 0 (position doc #\Newline)))
+            (format main *body* fun doc x)))))))))
