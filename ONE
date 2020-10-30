@@ -39,11 +39,10 @@ for f in $(find . -type f  -name "[[:lower:]]*.lisp"); do
     mkdir -p $(dirname $g)
     doc1 $f > $g
   fi
-done
-)
+done)
 
 if [ "$1" == "--ok" ]; then
-   lisp $2 | oops
+   lisp ${2}ok.lisp | oops
    exit
 elif [ "$1" == "--oks" ]; then
    for f in `find src -name "*ok.lisp"`; do

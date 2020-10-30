@@ -14,12 +14,13 @@ page."
   (format t "~a" (with-output-to-string (top)
    (loop while (setf thing (read-preserving-whitespace t nil)) 
     do
-    (if (stringp thing) 
-        (format main "~%~a~%" thing)
-        (when (member (car thing) want :key #'car)
-          (let* ((x (first  thing))
-                 (f (second thing))
-                 (s (elt    thing (cdr (assoc x want)))))
-            (format main fmt f s thing)
-            (format top "- [~(~a~)](#~(~a~)) : ~a~%" 
-                    f f (subseq s 0 (position #\Newline s))))))))))))
+    (when (stringp thing) 
+      (format main "~%~a~%" thing))
+    (when (listp thing)
+      (when (member (car thing) want :key #'car)
+        (let* ((x (first  thing))
+               (f (second thing))
+               (s (elt    thing (cdr (assoc x want)))))
+          (format main fmt f s thing)
+          (format top "- [~(~a~)](#~(~a~)) : ~a~%" 
+                  f f (subseq s 0 (position #\Newline s))))))))))))

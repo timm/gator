@@ -2,17 +2,19 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # ./lib/os.lisp
-- [klass-slots](#klass-slots) : what are the slots of a class?
-- [klass-slot-definition-name](#klass-slot-definition-name) : what is a slot's name?
-- [args](#args) : what are the command line args?
-- [stop](#stop) : how to halt the program?
-- [sh](#sh) : Run a shwll command
+- [klass-slots](#klass-slots) : What are the slots of a class?
+- [klass-slot-definition-name](#klass-slot-definition-name) : What is a slot's name?
+- [args](#args) : What are the command line args?
+- [stop](#stop) : How to halt the program?
+- [sh](#sh) : Run a shell command
+
+## OS Tricks
 
 Operating system specific code.
 
 ### klass-slots
 
-what are the slots of a class?
+What are the slots of a class?
 
 <ul><details><summary>...</summary>
 
@@ -25,7 +27,7 @@ what are the slots of a class?
 
 ### klass-slot-definition-name
 
-what is a slot's name?
+What is a slot's name?
 
 <ul><details><summary>...</summary>
 
@@ -38,7 +40,7 @@ what is a slot's name?
 
 ### args
 
-what are the command line args?
+What are the command line args?
 
 <ul><details><summary>...</summary>
 
@@ -49,7 +51,7 @@ what are the command line args?
 
 ### stop
 
-how to halt the program?
+How to halt the program?
 
 <ul><details><summary>...</summary>
 
@@ -60,13 +62,13 @@ how to halt the program?
 
 ### sh
 
-Run a shwll command
+Run a shell command
 
 <ul><details><summary>...</summary>
 
 ```lisp
 (defun sh (cmd)
-  "run a shwll command"
+  "run a shell command"
   (run-program "/bin/sh" (list "-c" cmd) :input nil :output *standard-output*))
 ```
 </details></ul>
