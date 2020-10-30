@@ -17,7 +17,7 @@ Convenience macros.
 
 A simple while loop.
 
-<ul><details><summary>...</summary>
+<ul><details><summary>src...</summary>
 
 ```lisp
 (defmacro while (test &body body)
@@ -30,7 +30,7 @@ A simple while loop.
 
 Recursive accessor.
 
-<ul><details><summary>...</summary>
+<ul><details><summary>src...</summary>
 
 ```lisp
 (defmacro getr (how obj f &rest fs)
@@ -45,7 +45,7 @@ Recursive accessor.
 
 Simple accessors to nested slots.
 
-<ul><details><summary>...</summary>
+<ul><details><summary>src...</summary>
 
 ```lisp
 (defmacro ? (x &rest fs)
@@ -58,7 +58,7 @@ Simple accessors to nested slots.
 
 Iterate over all positions and items in a list.
 
-<ul><details><summary>...</summary>
+<ul><details><summary>src...</summary>
 
 ```lisp
 (defmacro do-items ((n item lst &optional out) &body body)
@@ -72,7 +72,7 @@ Iterate over all positions and items in a list.
 
 Iterate over all the keys and values in a hash table.
 
-<ul><details><summary>...</summary>
+<ul><details><summary>src...</summary>
 
 ```lisp
 (defmacro do-keyval ((k v h &optional out) &body body)
@@ -85,7 +85,7 @@ Iterate over all the keys and values in a hash table.
 
 Iterate over all the keys and values in a property list.
 
-<ul><details><summary>...</summary>
+<ul><details><summary>src...</summary>
 
 ```lisp
 (defmacro do-pairs ((k v lst &optional out) &body body)
