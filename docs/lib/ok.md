@@ -9,7 +9,7 @@
 
 Print PASS if want==got else FAIL. Trap and ignore errors.
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defmacro ok (want got &optional (msg "") &rest txt &aux (c (gensym)))
@@ -29,7 +29,7 @@ Print PASS if want==got else FAIL. Trap and ignore errors.
 Run this code as a side effect of loading the file
    (trapping and ignoring errors)
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defmacro dofun (name args &body body &aux (c (gensym)))

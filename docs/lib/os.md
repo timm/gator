@@ -14,7 +14,7 @@ Operating system specific code.
 
 what are the slots of a class?
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defun klass-slots (it)
@@ -27,7 +27,7 @@ what are the slots of a class?
 
 what is a slot's name?
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defun klass-slot-definition-name (x)
@@ -40,7 +40,7 @@ what is a slot's name?
 
 what are the command line args?
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defun args () "what are the command line args?" *posix-argv*)
@@ -51,7 +51,7 @@ what are the command line args?
 
 how to halt the program?
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defun stop () "how to halt the program?" (exit))
@@ -62,7 +62,7 @@ how to halt the program?
 
 Run a shwll command
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defun sh (cmd)

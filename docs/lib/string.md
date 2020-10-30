@@ -29,7 +29,7 @@
  (IF HI
      (CELLS S (1+ HI))))
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defun cells (s &optional (lo 0) (hi (position #\, s :start (1+ lo))))
@@ -45,7 +45,7 @@
       (IF HI
           (LINES S (1+ HI))))
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defun lines (s &optional (lo 0) (hi (position #\newline s :start (1+ lo))))
@@ -62,7 +62,7 @@
      (WHILE (SETF ,LINE (READ-LINE ,STR NIL))
       (WHEN (> (LENGTH ,LINE) 0) (SETF ,LINE (CELLS ,LINE)) ,@BODY))))
 
-<ul><details><summary>src...</summary>
+<ul><details><summary>...</summary>
 
 ```lisp
 (defmacro with-csv ((line file) &body body &aux (str (gensym)))
