@@ -9,8 +9,7 @@
 
 ### ok
 
-Synopsis: <b>`(ok want got &optional (msg "") &rest txt &aux (c (gensym)))`</b>
-
+Synopsis: <b>`(ok want got &optional (msg "") &rest txt &aux (c (gensym)))`</b>  
 Print PASS if want==got else FAIL. Trap and ignore errors.
 
 <ul>
@@ -31,8 +30,7 @@ Print PASS if want==got else FAIL. Trap and ignore errors.
 
 ### dofun
 
-Synopsis: <b>`(dofun name args &body body &aux (c (gensym)))`</b>
-
+Synopsis: <b>`(dofun name args &body body &aux (c (gensym)))`</b>  
 Run this code as a side effect of loading the file
    (trapping and ignoring errors)
 

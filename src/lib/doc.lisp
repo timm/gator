@@ -25,7 +25,7 @@ The system is controlled by two variables:
 (let ((want '((defun    . 3) (defclass  . 3)
               (defmacro . 3) (defstruct . 2) (defmethod . 3)))
       (fmt  
-"~%### ~(~a~)~%~%Synopsis: <b>`~(~S~)`</b>~%~%~a~%~%<ul>~%<details><summary>(..)</summary>
+"~%### ~(~a~)~%~%Synopsis: <b>`~(~S~)`</b>  ~%~a~%~%<ul>~%<details><summary>(..)</summary>
 ~%```lisp~%~(~S~)~%```~%</details></ul>~%")
       thing)
  (format  t "~a" (with-output-to-string (main)
