@@ -7,8 +7,7 @@ Convenience macros."
   (if fs `(getr ,how (,how ,obj ',f) ,@fs) `(,how ,obj ',f)))
 
 (defmacro ? (x &rest fs) 
-  "Simple accessors to nested slots.
-  
+  "Simple accessors to nested slots.    
   e.g.
 
       \* (macroexpand '(? x address suburb zipcode))
