@@ -2,7 +2,7 @@
 
 (defmethod touch ((m mru) x)
   (with-slots (all init) m
-    (or (assoc x all)
+    (or (assoc x all :test #'equal)
         (car (setf all (cons (funcall init x) all))))))
 
 (defun xx()
