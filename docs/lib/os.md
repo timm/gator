@@ -16,7 +16,7 @@ Operating system specific code.
 
 What are the slots of a class?
 
-Synopsis: *`(klass-slots it)`
+Synopsis: <b>`(klass-slots it)`</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -30,7 +30,7 @@ Synopsis: *`(klass-slots it)`
 
 What is a slot's name?
 
-Synopsis: *`(klass-slot-definition-name x)`
+Synopsis: <b>`(klass-slot-definition-name x)`</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -44,7 +44,7 @@ Synopsis: *`(klass-slot-definition-name x)`
 
 What are the command line args?
 
-Synopsis: *`(args)`
+Synopsis: <b>`(args)`</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -58,7 +58,7 @@ Synopsis: *`(args)`
 
 How to halt the program?
 
-Synopsis: *`(stop)`
+Synopsis: <b>`(stop)`</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -72,7 +72,7 @@ Synopsis: *`(stop)`
 
 Run a shell command
 
-Synopsis: *`(sh cmd)`
+Synopsis: <b>`(sh cmd)`</b>
 
 <ul>
 <details><summary>(..)</summary>

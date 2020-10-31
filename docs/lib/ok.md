@@ -11,7 +11,7 @@
 
 Print PASS if want==got else FAIL. Trap and ignore errors.
 
-Synopsis: *`(ok want got &optional (msg "") &rest txt &aux (c (gensym)))`
+Synopsis: <b>`(ok want got &optional (msg "") &rest txt &aux (c (gensym)))`</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -34,7 +34,7 @@ Synopsis: *`(ok want got &optional (msg "") &rest txt &aux (c (gensym)))`
 Run this code as a side effect of loading the file
    (trapping and ignoring errors)
 
-Synopsis: *`(dofun name args &body body &aux (c (gensym)))`
+Synopsis: <b>`(dofun name args &body body &aux (c (gensym)))`</b>
 
 <ul>
 <details><summary>(..)</summary>

@@ -22,7 +22,7 @@ Simple accessors to nested slots.
   
   
 
-Synopsis: *`(? x &rest fs)`
+Synopsis: <b>`(? x &rest fs)`</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -36,7 +36,7 @@ Synopsis: *`(? x &rest fs)`
 
 Iterate over all positions and items in a list.
 
-Synopsis: *`(do-items (n item lst &optional out) &body body)`
+Synopsis: <b>`(do-items (n item lst &optional out) &body body)`</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -53,7 +53,7 @@ Synopsis: *`(do-items (n item lst &optional out) &body body)`
 
 Iterate over `key` `values` in a `hash` table, executing `body`.
 
-Synopsis: *`(hop (key value) over hash do &body body)`
+Synopsis: <b>`(hop (key value) over hash do &body body)`</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -69,7 +69,7 @@ Synopsis: *`(hop (key value) over hash do &body body)`
 
 Return alist`'s entry for `x` (and if needed, create it using `init`)
 
-Synopsis: *`(has! alist x &key else (test #'equal))`
+Synopsis: <b>`(has! alist x &key else (test #'equal))`</b>
 
 <ul>
 <details><summary>(..)</summary>
