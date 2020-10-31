@@ -2,7 +2,7 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # [./lib/macros.lisp](/src/./lib/macros.lisp)
-- [?](#?) : Simple accessors to nested slots.
+- [?](#?) : Simple accessors to nested slots.    
 - [do-items](#do-items) : Iterate over all positions and items in a list.
 - [hop](#hop) : Iterate over `key` `values` in a `hash` table, executing `body`.
 - [has!](#has!) : Return alist`'s entry for `x` (and if needed, create it using `init`)
@@ -14,8 +14,7 @@ Convenience macros.
 ### ?
 
 _Synopsis:_ <b>`(? x &rest fs)`</b>  
-Simple accessors to nested slots.
-  
+Simple accessors to nested slots.    
   e.g.
 
       * (macroexpand '(? x address suburb zipcode))
