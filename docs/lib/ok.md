@@ -11,7 +11,7 @@
 
 Print PASS if want==got else FAIL. Trap and ignore errors.
 
-Synopsis: <b>(cons ok (elt thing (1- pos)))</b>
+Synopsis: <b>(cons ok (want got &optional (msg "") &rest txt &aux (c (gensym))))</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -34,7 +34,7 @@ Synopsis: <b>(cons ok (elt thing (1- pos)))</b>
 Run this code as a side effect of loading the file
    (trapping and ignoring errors)
 
-Synopsis: <b>(cons dofun (elt thing (1- pos)))</b>
+Synopsis: <b>(cons dofun (name args &body body &aux (c (gensym))))</b>
 
 <ul>
 <details><summary>(..)</summary>
