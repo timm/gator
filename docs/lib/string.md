@@ -8,9 +8,9 @@
 
 ### cells
 
-Split a string into a list of cells, trimming whitespace.
-
 Synopsis: <b>`(cells s &optional (lo 0) (hi (position #\, s :start (1+ lo))))`</b>
+
+Split a string into a list of cells, trimming whitespace.
 
 <ul>
 <details><summary>(..)</summary>
@@ -26,10 +26,10 @@ Synopsis: <b>`(cells s &optional (lo 0) (hi (position #\, s :start (1+ lo))))`</
 
 ### lines
 
-Split a string into a list of lines, trimming whitespace.
-
 Synopsis: <b>`(lines s &optional (lo 0)
                (hi (position #\newline s :start (1+ lo))))`</b>
+
+Split a string into a list of lines, trimming whitespace.
 
 <ul>
 <details><summary>(..)</summary>
@@ -45,9 +45,9 @@ Synopsis: <b>`(lines s &optional (lo 0)
 
 ### with-csv
 
-Iterate over a csv file, returning a list of cells for each row.
-
 Synopsis: <b>`(with-csv (line file) &body body &aux (str (gensym)))`</b>
+
+Iterate over a csv file, returning a list of cells for each row.
 
 <ul>
 <details><summary>(..)</summary>
