@@ -16,7 +16,7 @@ Operating system specific code.
 
 What are the slots of a class?
 
-Synopsis: <b>(cons klass-slots (it))</b>
+Synopsis: <b>(klass-slots it)</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -30,7 +30,7 @@ Synopsis: <b>(cons klass-slots (it))</b>
 
 What is a slot's name?
 
-Synopsis: <b>(cons klass-slot-definition-name (x))</b>
+Synopsis: <b>(klass-slot-definition-name x)</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -44,7 +44,7 @@ Synopsis: <b>(cons klass-slot-definition-name (x))</b>
 
 What are the command line args?
 
-Synopsis: <b>(cons args nil)</b>
+Synopsis: <b>(args)</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -58,7 +58,7 @@ Synopsis: <b>(cons args nil)</b>
 
 How to halt the program?
 
-Synopsis: <b>(cons stop nil)</b>
+Synopsis: <b>(stop)</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -72,7 +72,7 @@ Synopsis: <b>(cons stop nil)</b>
 
 Run a shell command
 
-Synopsis: <b>(cons sh (cmd))</b>
+Synopsis: <b>(sh cmd)</b>
 
 <ul>
 <details><summary>(..)</summary>

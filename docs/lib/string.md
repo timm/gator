@@ -10,8 +10,7 @@
 
 Split a string into a list of cells, trimming whitespace.
 
-Synopsis: <b>(cons cells
-                   (s &optional (lo 0) (hi (position #\, s :start (1+ lo)))))</b>
+Synopsis: <b>(cells s &optional (lo 0) (hi (position #\, s :start (1+ lo))))</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -29,9 +28,8 @@ Synopsis: <b>(cons cells
 
 Split a string into a list of lines, trimming whitespace.
 
-Synopsis: <b>(cons lines
-                   (s &optional (lo 0)
-                    (hi (position #\newline s :start (1+ lo)))))</b>
+Synopsis: <b>(lines s &optional (lo 0)
+              (hi (position #\newline s :start (1+ lo))))</b>
 
 <ul>
 <details><summary>(..)</summary>
@@ -49,7 +47,7 @@ Synopsis: <b>(cons lines
 
 Iterate over a csv file, returning a list of cells for each row.
 
-Synopsis: <b>(cons with-csv ((line file) &body body &aux (str (gensym))))</b>
+Synopsis: <b>(with-csv (line file) &body body &aux (str (gensym)))</b>
 
 <ul>
 <details><summary>(..)</summary>

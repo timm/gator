@@ -40,7 +40,7 @@ The system is controlled by two variables:
                (f      (second thing))
                (pos    (cdr (assoc x want)))
                (s      (elt    thing pos))
-               (synopsis `(cons ,f ,(elt thing (1- pos)))))
+               (synopsis (cons f (elt thing (1- pos)))))
           (when (stringp s)
             (setf (elt thing pos) "")
             (format main fmt f s synopsis thing)
