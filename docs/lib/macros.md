@@ -13,7 +13,7 @@ Convenience macros.
 
 ### ?
 
-Synopsis: <b>`(? x &rest fs)`</b>  
+_Synopsis:_ <b>`(? x &rest fs)`</b>  
 Simple accessors to nested slots.
   
   e.g.
@@ -33,7 +33,7 @@ Simple accessors to nested slots.
 
 ### do-items
 
-Synopsis: <b>`(do-items (n item lst &optional out) &body body)`</b>  
+_Synopsis:_ <b>`(do-items (n item lst &optional out) &body body)`</b>  
 Iterate over all positions and items in a list.
 
 <ul>
@@ -49,7 +49,7 @@ Iterate over all positions and items in a list.
 
 ### hop
 
-Synopsis: <b>`(hop (key value) over hash do &body body)`</b>  
+_Synopsis:_ <b>`(hop (key value) over hash do &body body)`</b>  
 Iterate over `key` `values` in a `hash` table, executing `body`.
 
 <ul>
@@ -64,7 +64,7 @@ Iterate over `key` `values` in a `hash` table, executing `body`.
 
 ### has!
 
-Synopsis: <b>`(has! alist x &key else (test #'equal))`</b>  
+_Synopsis:_ <b>`(has! alist x &key else (test #'equal))`</b>  
 Return alist`'s entry for `x` (and if needed, create it using `init`)
 
 <ul>

@@ -14,7 +14,7 @@ Operating system specific code.
 
 ### klass-slots
 
-Synopsis: <b>`(klass-slots it)`</b>  
+_Synopsis:_ <b>`(klass-slots it)`</b>  
 What are the slots of a class?
 
 <ul>
@@ -27,7 +27,7 @@ What are the slots of a class?
 
 ### klass-slot-definition-name
 
-Synopsis: <b>`(klass-slot-definition-name x)`</b>  
+_Synopsis:_ <b>`(klass-slot-definition-name x)`</b>  
 What is a slot's name?
 
 <ul>
@@ -40,7 +40,7 @@ What is a slot's name?
 
 ### args
 
-Synopsis: <b>`(args)`</b>  
+_Synopsis:_ <b>`(args)`</b>  
 What are the command line args?
 
 <ul>
@@ -53,7 +53,7 @@ What are the command line args?
 
 ### stop
 
-Synopsis: <b>`(stop)`</b>  
+_Synopsis:_ <b>`(stop)`</b>  
 How to halt the program?
 
 <ul>
@@ -66,7 +66,7 @@ How to halt the program?
 
 ### sh
 
-Synopsis: <b>`(sh cmd)`</b>  
+_Synopsis:_ <b>`(sh cmd)`</b>  
 Run a shell command
 
 <ul>
