@@ -15,7 +15,10 @@ Operating system specific code.
 ### klass-slots
 
 What are the slots of a class?
- <ul>
+
+Synopsis: <b>(cons klass-slots (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -26,7 +29,10 @@ What are the slots of a class?
 ### klass-slot-definition-name
 
 What is a slot's name?
- <ul>
+
+Synopsis: <b>(cons klass-slot-definition-name (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -37,7 +43,10 @@ What is a slot's name?
 ### args
 
 What are the command line args?
- <ul>
+
+Synopsis: <b>(cons args (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -48,7 +57,10 @@ What are the command line args?
 ### stop
 
 How to halt the program?
- <ul>
+
+Synopsis: <b>(cons stop (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -59,7 +71,10 @@ How to halt the program?
 ### sh
 
 Run a shell command
- <ul>
+
+Synopsis: <b>(cons sh (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp

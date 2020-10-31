@@ -25,7 +25,7 @@ The system is controlled by two variables:
 (let ((want '((defun    . 3) (defclass  . 3)
               (defmacro . 3) (defstruct . 2) (defmethod . 3)))
       (fmt  
-"~%### ~(~a~)~%~%~a~% <ul>~%<details><summary>(..)</summary>
+"~%### ~(~a~)~%~%~a~%~%Synopsis: <b>~(~S~)</b>~%~%<ul>~%<details><summary>(..)</summary>
 ~%```lisp~%~(~S~)~%```~%</details></ul>~%")
       thing)
  (format  t "~a" (with-output-to-string (main)
@@ -39,9 +39,10 @@ The system is controlled by two variables:
         (let* ((x      (first  thing))
                (f      (second thing))
                (pos    (cdr (assoc x want)))
-               (s      (elt    thing pos)))
+               (s      (elt    thing pos))
+               (synopsis `(cons ,f (elt thing (1- pos)))))
           (when (stringp s)
             (setf (elt thing pos) "")
-            (format main fmt f s thing)
+            (format main fmt f s synopsis thing)
             (format top "- [~(~a~)](#~(~a~)) : ~a~%" 
                     f f (subseq s 0 (position #\Newline s)))))))))))))

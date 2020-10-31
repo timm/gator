@@ -21,7 +21,10 @@ Simple accessors to nested slots.
       (SLOT-VALUE (SLOT-VALUE (SLOT-VALUE X 'ADDRESS) 'SUBURB) 'ZIPCODE)
   
   
- <ul>
+
+Synopsis: <b>(cons ? (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -32,7 +35,10 @@ Simple accessors to nested slots.
 ### do-items
 
 Iterate over all positions and items in a list.
- <ul>
+
+Synopsis: <b>(cons do-items (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -46,7 +52,10 @@ Iterate over all positions and items in a list.
 ### hop
 
 Iterate over `key` `values` in a `hash` table, executing `body`.
- <ul>
+
+Synopsis: <b>(cons hop (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -59,7 +68,10 @@ Iterate over `key` `values` in a `hash` table, executing `body`.
 ### has!
 
 Return alist`'s entry for `x` (and if needed, create it using `init`)
- <ul>
+
+Synopsis: <b>(cons has! (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp

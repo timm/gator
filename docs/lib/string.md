@@ -9,7 +9,10 @@
 ### cells
 
 Split a string into a list of cells, trimming whitespace.
- <ul>
+
+Synopsis: <b>(cons cells (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -24,7 +27,10 @@ Split a string into a list of cells, trimming whitespace.
 ### lines
 
 Split a string into a list of lines, trimming whitespace.
- <ul>
+
+Synopsis: <b>(cons lines (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -39,7 +45,10 @@ Split a string into a list of lines, trimming whitespace.
 ### with-csv
 
 Iterate over a csv file, returning a list of cells for each row.
- <ul>
+
+Synopsis: <b>(cons with-csv (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp

@@ -10,7 +10,10 @@
 ### ok
 
 Print PASS if want==got else FAIL. Trap and ignore errors.
- <ul>
+
+Synopsis: <b>(cons ok (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -30,7 +33,10 @@ Print PASS if want==got else FAIL. Trap and ignore errors.
 
 Run this code as a side effect of loading the file
    (trapping and ignoring errors)
- <ul>
+
+Synopsis: <b>(cons dofun (elt thing (1- pos)))</b>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
