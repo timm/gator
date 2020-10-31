@@ -1,16 +1,13 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# ./stats/abcd.lisp
+# [./stats/abcd.lisp](/src/./stats/abcd.lisp)
 - [abcd](#abcd) : holder for results of one class
 - [print-object](#print-object) : Print an abcd
-- [adds](#adds) : Given actual and predicted, update one set of results.
+- [adds](#adds) : Given want and got, update one set of results.
 - [update](#update) : Reset all the derived cacls of this result.
 - [abcds](#abcds) : Holder for mutiple results
-- [known](#known) : Ensure that resuts for `x` exists. 
-- [adds](#adds) : Given actual and predicted, update all results.
-
---------
+- [adds](#adds) : Given want and got, update all results.
 
 ### abcd
 
@@ -30,33 +27,34 @@ Print an abcd
 <details><summary>(..)</summary>
 
 ```lisp
-(defmethod print-object ((i abcd) str)
+(defmethod print-object ((obj abcd) stream)
   ""
-  (with-slots (target pf prec pd f g n c d acc)
-      (update i)
-    (format str "target: ~a n: ~a pf: ~a prec: ~a pd: ~a f: ~a g: ~a acc: ~a"
-            target (+ c d) (round (* 100 pf)) (round (* 100 prec))
-            (round (* 100 pd)) (round (* 100 f)) (round (* 100 g))
-            (round (* 100 acc)))))
+  (labels ((p (z)
+             (round (* 100 z))))
+    (with-slots (target pf prec pd f g n c d acc)
+        (update obj)
+      (format stream "#s~s"
+              `(abcd :target ,target :pd ,(p pd) :pf ,(p pf) :prec ,(p prec) :f
+                ,(p f) :g ,(p g) :n ,(+ c d) :acc ,(p acc))))))
 ```
 </details></ul>
 
 ### adds
 
-Given actual and predicted, update one set of results.
+Given want and got, update one set of results.
  <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmethod adds ((i abcd) actual predicted)
+(defmethod adds ((obj abcd) want got)
   ""
   (with-slots (a b c d target)
-      i
-    (if (eql actual target)
-        (if (eql predicted actual)
+      obj
+    (if (eql want target)
+        (if (eql got want)
             (incf d)
             (incf b))
-        (if (eql predicted target)
+        (if (eql got target)
             (incf c)
             (incf a)))))
 ```
@@ -69,10 +67,10 @@ Reset all the derived cacls of this result.
 <details><summary>(..)</summary>
 
 ```lisp
-(defmethod update ((i abcd) &aux notpf (zip (float (expt 10 -32))))
+(defmethod update ((obj abcd) &aux notpf (zip (float (expt 10 -32))))
   ""
   (with-slots (a b c d acc pf prec pd f g n)
-      i
+      obj
     (setf acc (/ (+ a d) (+ zip a b c d))
           pf (/ c (+ zip a c))
           prec (/ d (+ zip c d))
@@ -80,7 +78,7 @@ Reset all the derived cacls of this result.
           notpf (- 1 pf)
           f (/ (* 2 prec pd) (+ zip prec pd))
           g (/ (* 2 notpf pd) (+ zip notpf pd)))
-    i))
+    obj))
 ```
 </details></ul>
 
@@ -95,40 +93,24 @@ Holder for mutiple results
 ```
 </details></ul>
 
-### known
-
-Ensure that resuts for `x` exists. 
-   Set `a` to everything missed so far.
- <ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defmethod known ((i abcds) x)
-  ""
-  (with-slots (yes no all)
-      i
-    (unless (getf all x)
-      (setf all (append `(,x ,(make-abcd :target x :a (+ yes no)) all))))))
-```
-</details></ul>
-
 ### adds
 
-Given actual and predicted, update all results.
+Given want and got, update all results.
  <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmethod adds ((i abcds) actual predicted)
+(defmethod adds ((obj abcds) want got)
   ""
   (with-slots (yes no all)
-      i
-    (known i actual)
-    (known i predicted)
-    (if (equalp actual predicted)
+      obj
+    (if (equalp want got)
         (incf yes)
         (incf no))
-    (do-pairs (target result all) (adds result actual predicted))))
+    (has! all want :else (make-abcd :target want :a (+ yes no)))
+    (has! all got :else (make-abcd :target got :a (+ yes no)))
+    (loop for (target . result) in all
+          do (adds result want got))))
 ```
 </details></ul>
 

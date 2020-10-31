@@ -3,10 +3,6 @@
 
 Convenience macros."
 
-(defmacro while (test &body body) 
-  "A simple while loop."
-  `(do () ((not ,test)) ,@body))
-
 (defmacro getr (how obj f &rest fs)
   (if fs `(getr ,how (,how ,obj ',f) ,@fs) `(,how ,obj ',f)))
 
@@ -26,17 +22,20 @@ Convenience macros."
   `(let ((,n -1))
      (dolist (,item ,lst ,out) (incf ,n) ,@body)))
 
-(defmacro do-keyval ((k v h &optional out) &body body )
-  "Iterate over all the keys and values in a hash table."
-  `(progn (maphash #'(lambda (,k ,v) ,@body) ,h) ,out))
+#+a(defmacro hop (for (key  val) in hash do &body body)
+  `(progn (declare (ignore ,for ,in ,do))
+          (maphash #'(lambda (,key ,val) ,@body) ,hash)))
 
-(defmacro do-pairs ((k v lst &optional out) &body body)
-  "Iterate over all the keys and values in a property list."
-  (let ((tmp (gensym)))
-    `(let ((,tmp ,lst))
-       (while ,tmp
-              (let ((,k (car  ,tmp))
-                    (,v (cadr ,tmp)))
-                ,@body
-                (setq ,tmp (cddr ,tmp))))
-       ,out)))
+(defmacro hop ((key  value) over hash do  &body body)
+  "Iterate over `key` `values` in a `hash` table, executing `body`."
+  `(maphash #'(lambda (,key ,value) ,@body) ,hash))
+
+(defmacro has! (alist x &key else (test #'equal))
+  "Return alist`'s entry for `x` (and if needed, create it using `init`)"
+  `(or (assoc ,x ,alist :test ,test)
+       (car (setf ,alist 
+                  (cons (cons ,x  ,else) 
+                        ,alist)))))
+
+
+

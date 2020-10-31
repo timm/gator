@@ -2,26 +2,14 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # [./lib/macros.lisp](/src/./lib/macros.lisp)
-- [while](#while) : A simple while loop.
 - [?](#?) : Simple accessors to nested slots.
 - [do-items](#do-items) : Iterate over all positions and items in a list.
-- [do-keyval](#do-keyval) : Iterate over all the keys and values in a hash table.
-- [do-pairs](#do-pairs) : Iterate over all the keys and values in a property list.
+- [hop](#hop) : Iterate over `key` `values` in a `hash` table, executing `body`.
+- [has!](#has!) : Return alist`'s entry for `x` (and if needed, create it using `init`)
 
 ## Macros
 
 Convenience macros.
-
-### while
-
-A simple while loop.
- <ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defmacro while (test &body body) "" `(do () ((not ,test)) ,@body))
-```
-</details></ul>
 
 ### ?
 
@@ -55,35 +43,30 @@ Iterate over all positions and items in a list.
 ```
 </details></ul>
 
-### do-keyval
+### hop
 
-Iterate over all the keys and values in a hash table.
+Iterate over `key` `values` in a `hash` table, executing `body`.
  <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmacro do-keyval ((k v h &optional out) &body body)
+(defmacro hop ((key value) over hash do &body body)
   ""
-  `(progn (maphash #'(lambda (,k ,v) ,@body) ,h) ,out))
+  `(maphash #'(lambda (,key ,value) ,@body) ,hash))
 ```
 </details></ul>
 
-### do-pairs
+### has!
 
-Iterate over all the keys and values in a property list.
+Return alist`'s entry for `x` (and if needed, create it using `init`)
  <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmacro do-pairs ((k v lst &optional out) &body body)
+(defmacro has! (alist x &key else (test #'equal))
   ""
-  (let ((tmp (gensym)))
-    `(let ((,tmp ,lst))
-       (while ,tmp
-        (let ((,k (car ,tmp)) (,v (cadr ,tmp)))
-          ,@body
-          (setq ,tmp (cddr ,tmp))))
-       ,out)))
+  `(or (assoc ,x ,alist :test ,test)
+       (car (setf ,alist (cons (cons ,x ,else) ,alist)))))
 ```
 </details></ul>
 

@@ -30,7 +30,7 @@
 
 (defun xx()
   (let ((m (make-mru)))
-    (dotimes (i 100 m) 
+    (dotimes (i 1000 m) 
       (dotimes (i 16) (incf (cdr (touch m  'd))))
       (dotimes (i 2) (incf  (cdr (touch m  'a))))
       (dotimes (i 4) (incf (cdr (touch m  'b))))
@@ -44,7 +44,7 @@
 
 (defun xx1()
   (let ((m (make-mru1)))
-    (dotimes (i 100 m) 
+    (dotimes (i 1000 m) 
       (dotimes (i 16)  (incf  (cdr (has m  'd))))
       (dotimes (i 2)   (incf  (cdr (has m  'a))))
       (dotimes (i 4)   (incf  (cdr (has m  'b))))
@@ -57,5 +57,6 @@
       )))
 (time (xx))
 (time (xx1))
+(print (xx))
 (print (gethash 'i (mru1-all (xx1))))
 

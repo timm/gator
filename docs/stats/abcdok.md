@@ -1,9 +1,7 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# ./stats/abcdok.lisp
-
---------
+# [./stats/abcdok.lisp](/src/./stats/abcdok.lisp)
 
 <hr>
 
