@@ -21,10 +21,6 @@ Convenience macros."
   `(let ((,n -1))
      (dolist (,item ,lst ,out) (incf ,n) ,@body)))
 
-#+a(defmacro hop (for (key  val) in hash do &body body)
-  `(progn (declare (ignore ,for ,in ,do))
-          (maphash #'(lambda (,key ,val) ,@body) ,hash)))
-
 (defmacro hop ((key  value) over hash do  &body body)
   "Iterate over `key` `values` in a `hash` table, executing `body`."
   `(maphash #'(lambda (,key ,value) ,@body) ,hash))
