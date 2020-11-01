@@ -2,9 +2,23 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # [./lib/string.lisp](/src/./lib/string.lisp)
+- [o](#o) : Easy print for a list of things.
 - [cells](#cells) : Split a string into a list of cells, trimming whitespace.
 - [lines](#lines) : Split a string into a list of lines, trimming whitespace.
 - [with-csv](#with-csv) : Iterate over a csv file, returning a list of cells for each row.
+
+### o
+
+_Synopsis:_ <b>`(o &rest l)`</b>  
+Easy print for a list of things.
+
+<ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defun o (&rest l) "" (format t "~{~a~^, ~}" l))
+```
+</details></ul>
 
 ### cells
 
@@ -54,8 +68,10 @@ Iterate over a csv file, returning a list of cells for each row.
   ""
   `(let (,line)
      (with-open-file (,str ,file)
-       (while (setf ,line (read-line ,str nil))
-        (when (> (length ,line) 0) (setf ,line (cells ,line)) ,@body)))))
+       (loop while (setf ,line (read-line ,str nil))
+             do (when (> (length ,line) 0)
+                  (setf ,line (cells ,line))
+                  ,@body)))))
 ```
 </details></ul>
 

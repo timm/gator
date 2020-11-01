@@ -11,8 +11,10 @@
 
 ### abcd
 
+_Synopsis:_ <b>`(abcd . abcd)`</b>  
 holder for results of one class
- <ul>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -22,8 +24,10 @@ holder for results of one class
 
 ### print-object
 
+_Synopsis:_ <b>`(print-object (obj abcd) stream)`</b>  
 Print an abcd
- <ul>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -41,8 +45,10 @@ Print an abcd
 
 ### adds
 
+_Synopsis:_ <b>`(adds (obj abcd) want got)`</b>  
 Given want and got, update one set of results.
- <ul>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -62,8 +68,10 @@ Given want and got, update one set of results.
 
 ### update
 
+_Synopsis:_ <b>`(update (obj abcd) &aux notpf (zip (float (expt 10 -32))))`</b>  
 Reset all the derived cacls of this result.
- <ul>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -84,8 +92,10 @@ Reset all the derived cacls of this result.
 
 ### abcds
 
+_Synopsis:_ <b>`(abcds . abcds)`</b>  
 Holder for mutiple results
- <ul>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp
@@ -95,8 +105,10 @@ Holder for mutiple results
 
 ### adds
 
+_Synopsis:_ <b>`(adds (obj abcds) want got)`</b>  
 Given want and got, update all results.
- <ul>
+
+<ul>
 <details><summary>(..)</summary>
 
 ```lisp

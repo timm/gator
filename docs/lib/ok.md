@@ -2,21 +2,35 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # [./lib/ok.lisp](/src/./lib/ok.lisp)
+- [ish](#ish) : T if `x` close to `y`.
 - [ok](#ok) : Print PASS if want==got else FAIL. Trap and ignore errors.
 - [dofun](#dofun) : Run this code as a side effect of loading the file
 
 ## Unit test engine
 
+### ish
+
+_Synopsis:_ <b>`(ish x y &optional (z 0.001))`</b>  
+T if `x` close to `y`.
+
+<ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defun ish (x y &optional (z 0.001)) "" (< (abs (/ (- x y) x)) z))
+```
+</details></ul>
+
 ### ok
 
-_Synopsis:_ <b>`(ok want got &optional (msg "") &rest txt &aux (c (gensym)))`</b>  
+_Synopsis:_ <b>`(ok want &optional (got t) (msg "") &rest txt &aux (c (gensym)))`</b>  
 Print PASS if want==got else FAIL. Trap and ignore errors.
 
 <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmacro ok (want got &optional (msg "") &rest txt &aux (c (gensym)))
+(defmacro ok (want &optional (got t) (msg "") &rest txt &aux (c (gensym)))
   ""
   `(let (,c)
      (handler-case

@@ -2,8 +2,11 @@
 "## Unit test engine"
 
 (load "../my")
+(defun ish (x y &optional (z 0.001)) 
+  "T if `x` close to `y`."
+  (< (abs (/ (- x y) x)) z))
 
-(defmacro ok (want got &optional (msg "") &rest txt &aux (c (gensym)))
+(defmacro ok (want &optional (got t) (msg "") &rest txt &aux (c (gensym)))
   "Print PASS if want==got else FAIL. Trap and ignore errors."
   `(let (,c) 
      (handler-case
