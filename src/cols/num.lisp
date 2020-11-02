@@ -7,8 +7,8 @@
 (defstruct (num (:include col)) 
   (mu 0) (sd 0) (m2 0) (lo 1E32) (hi -1E32))
 
-(defmethod add ((obj num) (x number)) 
-  (with-slots (n lo hi mu m2 sd) obj
+(defmethod add1 ((i num) (x number)) 
+  (with-slots (n lo hi mu m2 sd) i
     (setf  n (1+  n)
            d (-   x  mu)
           lo (min lo x)

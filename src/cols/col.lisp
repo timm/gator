@@ -3,11 +3,11 @@
 (load "../my")
 (load "../lib/ok")
 
-(defstruct col (pos 0) (from 0) (txt "") (n 0))
+(defstruct col (pos 0)  (txt "") (n 0))
 
-(defmethod add* ((obj col) xs)
-  (dolist (x xs obj) (add obj x)))
+(defmethod add ((i col) (xs list))
+  (dolist (x xs i) (add i x)))
  
-(defmethod add ((obj col) (x string)) 
-  (unless (equal x "?") (add obj (read-from-string x)))
+(defmethod add ((i col) x) 
+  (unless (equal x "?") (add1 i x))
   x)
