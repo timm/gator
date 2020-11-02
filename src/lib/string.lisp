@@ -48,7 +48,7 @@
   (let ((skip1 (pop want2skip))
         (prep1 (or (pop prep) #'identity)))
    (labels  (
-     (cell1() (and hi (cells str want2skip prep (1+ hi))))
-     (word () (funcall prep1 (string-trim '(#\Space #\Tab #\Newline) 
+     (after() (and hi (cells str want2skip prep (1+ hi))))
+     (here () (funcall prep1 (string-trim '(#\Space #\Tab #\Newline) 
                                            (subseq str lo hi)))))
-    (if skip1 (cell1) (cons (word) (cell1))))))
+    (if skip1 (after) (cons (here) (after))))))
