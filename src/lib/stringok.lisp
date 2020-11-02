@@ -7,4 +7,6 @@
             (format t "~&~a~%" line)))
          
 (with-csv (line "../../data/weather.csv") 
-          (format t "~&~a~%" line)) 
+  (print line))
+
+  ;        (format t "~&~a~%" line)) 
