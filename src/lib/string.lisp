@@ -19,10 +19,9 @@
     `(let (,line (,mem (make-inside-with-csv)))
        (with-open-file (,str ,file)
          (loop while (setf ,line (read-line ,str nil)) do
-            (if (> (length ,line) 0)
-              (let ((,lst (add ,mem ,line)))
-                ,@body)))
-        (print ,mem)
+               (if (> (length ,line) 0)
+                 (let ((,lst (add ,mem ,line)))
+                   ,@body)))
          ,out))))
 
 ; some slave functions for with-csv
@@ -46,11 +45,9 @@
 ; Split `str` on comma, maybe skip some cells, trim whitespace.
 (defun cells (str &optional want2skip  prep
                   (lo 0) (hi (position #\, str :start (1+ lo))))
-  (let ((skip1 (car want2skip))
-        (prep1 (or (car prep) #'identity)))
-    (if skip1
-      (and hi (cells str (cdr want2skip) (cdr prep) (1+ hi)))
-      (cons (funcall prep1 
-                     (string-trim '(#\Space #\Tab #\Newline) 
-                                  (subseq str lo hi)))
-            (and hi (cells str (cdr want2skip) (cdr prep) (1+ hi)))))))
+  (labels 
+    ((cell1() (and hi (cells str (cdr want2skip) (cdr prep) (1+ hi))))
+     (word () (funcall (or (car prep) #'identity) 
+                        (string-trim '(#\Space #\Tab #\Newline) 
+                                     (subseq str lo hi)))))
+    (if (car want2skip) (cell1) (cons (word) (cell1)))))
