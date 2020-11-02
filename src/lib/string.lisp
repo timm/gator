@@ -27,8 +27,9 @@
     `(let (,line (,mem (make-xpect)))
        (with-open-file (,str ,file)
          (loop while (setf ,line (read-line ,str nil)) do
-            (if (> (length ,line) 0)
-              (let ((,lst (add ,mem ,line)))
+               (if (> (length ,line) 0)
+                 (let ((,lst (add ,mem ,line)))
+                   ,@body)))))))
  
 ; some slave functions for with-csv
 (defstruct xpect want2skip size)
@@ -43,5 +44,3 @@
                 lst        (remove-if #'skip lst)
                 size       (length lst))))
       lst)))
-
-(               ,@body)))))))
