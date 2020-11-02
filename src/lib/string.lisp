@@ -51,4 +51,6 @@
      (after() (and hi (cells str want2skip prep (1+ hi))))
      (here () (funcall prep1 (string-trim '(#\Space #\Tab #\Newline) 
                                            (subseq str lo hi)))))
-    (if skip1 (after) (cons (here) (after))))))
+    (if skip1 
+      (after) 
+      (cons (here) (after))))))
