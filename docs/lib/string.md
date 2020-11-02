@@ -4,7 +4,6 @@
 # [./lib/string.lisp](/src/./lib/string.lisp)
 - [o](#o) : Easy print for a list of things.
 - [lines](#lines) : Split a string into a list of lines, trimming whitespace.
-- [cells](#cells) : Split `str` on comma, maybe skip some cells, trim whitespace.
 - [with-csv](#with-csv) : Iterate over a csv file, return a list of cells for each row.
 
 ### o
@@ -38,44 +37,25 @@ Split a string into a list of lines, trimming whitespace.
 ```
 </details></ul>
 
-### cells
-
-_Synopsis:_ <b>`(cells str &optional want2skip (lo 0)
-                 (hi (position #\, str :start (1+ lo))))`</b>  
-Split `str` on comma, maybe skip some cells, trim whitespace.
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defun cells
-       (str &optional want2skip (lo 0) (hi (position #\, str :start (1+ lo))))
-  ""
-  (if (car want2skip)
-      (and hi (cells str (cdr want2skip) (1+ hi)))
-      (cons (string-trim '(#\  #\tab #\newline) (subseq str lo hi))
-            (and hi (cells str (cdr want2skip) (1+ hi))))))
-```
-</details></ul>
-
 ### with-csv
 
-_Synopsis:_ <b>`(with-csv (lst file) &body body)`</b>  
+_Synopsis:_ <b>`(with-csv (lst file &optional out) &body body)`</b>  
 Iterate over a csv file, return a list of cells for each row.
 
 <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmacro with-csv ((lst file) &body body)
+(defmacro with-csv ((lst file &optional out) &body body)
   ""
   (let ((mem (gensym)) (line (gensym)) (str (gensym)))
-    `(let (,line (,mem (make-xpect)))
+    `(let (,line (,mem (make-inside-with-csv)))
        (with-open-file (,str ,file)
          (loop while (setf ,line (read-line ,str nil))
                do (if (> (length ,line) 0)
                       (let ((,lst (add ,mem ,line)))
-                        ,@body)))))))
+                        ,@body)))
+         ,out))))
 ```
 </details></ul>
 

@@ -13,44 +13,59 @@
   (cons (cells (subseq s lo hi))
         (if hi (lines s (1+ hi)))))
 
-(defmacro with-csv ((lst file &optional out) &body body)
-  "Iterate over a csv file, return a list of cells for each row."
-  (let ((mem  (gensym)) (line (gensym)) (str (gensym)))
-    `(let (,line (,mem (make-inside-with-csv)))
+; (defmacro with-csv ((lst file &optional out) &body body)
+;   "Iterate over a csv file, return a list of cells for each row."
+;   (let ((mem  (gensym)) (line (gensym)) (str (gensym)))
+;     `(let (,line (,mem (make-inside-with-csv)))
+;        (with-open-file (,str ,file)
+;          (loop while (setf ,line (read-line ,str nil)) do
+;                (if (> (length ,line) 0)
+;                  (let ((,lst (add ,mem ,line)))
+;                    ,@body)))
+;          ,out))))
+; 
+; (defstruct inside-with-csv prep want2skip size)
+; 
+; (defmethod add ((i inside-with-csv) str)
+;   (setf lst        (cells str)
+;         (? i prep) (or (? i prep) 
+;                        (loop for x in lst
+;                              collect 
+;                              (unless (eql #\? echar x 0)) 
+;                                (if (member (char x 0) '(#\< #\> #\:)) 
+;                                  #'read-from-string
+;                                  #'identity))))
+;         lst        (loop for x in lst 
+;                          for y in (? i prep) 
+;                          if  y collect (funcall y x))
+;         (? i size) (or (? i size) (length lst)))
+;   (assert (eql (? i size)  (length lst)))
+;   lst)
+; 
+(defun cells (str &optional (lo 0) (hi (position #\, str :start (1+ lo))))
+  (cons (string-trim '(#\Space #\Tab #\Newline) (subseq str lo hi))
+        (and hi (cells str (1+ hi)))))
+
+(defmacro with-csv ((line file &optional out) &body body)
+  "Iteratively  return cells per line, pruning ignored columns, maybe coerce strings to nums."
+  (let ((prep (gensym)) (str (gensym)) (tmp (gensym)) (size (gensym)))
+    `(let (,line ,prep ,size)
        (with-open-file (,str ,file)
-         (loop while (setf ,line (read-line ,str nil)) do
-               (if (> (length ,line) 0)
-                 (let ((,lst (add ,mem ,line)))
-                   ,@body)))
-         ,out))))
-
-; some slave functions for with-csv
-(defstruct inside-with-csv want2skip prep size)
-
-(defmethod add ((obj inside-with-csv) str)
-  (with-slots (want2skip size prep) obj
-    (let ((lst (cells str want2skip prep)))
-      (if size ; first time through, "size" is nil
-        (assert (eql size  (length lst)))
-        (labels ((skip (x) (eql #\? (char x 0)))
-                 (prep (x) (if (member (char x 0) '(#\< #\> #\:)) 
-                               #'read-from-string 
-                               #'identity)))
-          (setf want2skip  (mapcar    #'skip lst)
-                lst        (remove-if #'skip lst)
-                prep       (mapcar    #'prep lst)
-                size       (length lst))))
-      lst)))
-
-; Split `str` on comma, maybe skip some cells, trim whitespace.
-(defun cells (str &optional want2skip  prep
-                  (lo 0) (hi (position #\, str :start (1+ lo))))
-  (let ((skip1 (pop want2skip))
-        (prep1 (or (pop prep) #'identity)))
-   (labels  (
-     (after() (and hi (cells str want2skip prep (1+ hi))))
-     (here () (funcall prep1 (string-trim '(#\Space #\Tab #\Newline) 
-                                           (subseq str lo hi)))))
-    (if skip1 
-      (after) 
-      (cons (here) (after))))))
+         (loop while (setf ,tmp (read-line ,str nil)) do
+            (when (> (length ,tmp) 0)
+              (setf ,tmp  (cells ,tmp)
+                    ,prep (or ,prep 
+                              (mapcar 
+                                #'(lambda (x)
+                                    (unless (eql #\? (char x 0)) 
+                                      (if (member (char x 0) '(#\< #\> #\:)) 
+                                        #'read-from-string
+                                        #'identity))) 
+                                ,tmp)))
+              (let (,line)
+                (mapc #'(lambda (x f) (if f (push (funcall f x) ,line))) 
+                      ,tmp ,prep)
+                (setf  ,size (or ,size  (length ,line)))
+                (assert (eql ,size  (length ,line)))
+                ,@body))))
+       ,out)))

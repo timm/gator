@@ -2,6 +2,20 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # [./cols/tab.lisp](/src/./cols/tab.lisp)
+- [tab](#tab) : Table
+
+### tab
+
+_Synopsis:_ <b>`(tab . tab)`</b>  
+Table
+
+<ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defstruct tab "" (new t) use xs ys cols rows)
+```
+</details></ul>
 
 <hr>
 

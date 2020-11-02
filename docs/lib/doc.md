@@ -5,11 +5,10 @@
 
 ##  My simple documenter
 
-Convert lisp code to markdown.  Strings are printed
-verbatim.  defuns, defmacros, defmethods, defclass,
-defstructs get their doco string pulled, then topped with a
-&lt;h3> heading. And a table of contents is added to the top of
-page.
+Convert lisp code to markdown.  Strings are printed verbatim.
+defuns, defmacros, defmethods, defclass, defstructs get their doco
+string pulled, then topped with a &lt;h3> heading. And a table of
+contents is added to the top of page.
 
 Note: 30 lines of code! :wink:
 
@@ -19,12 +18,12 @@ Usage:
 
 The system is controlled by two variables:
 
-- The `want` variable.
-  An entry (e.g.) `(defun . 3)` says that we will display lists
-  starting with `defun` if it has a doc string as element `3`
+- The `want` variable.  An entry (e.g.) `(defun . 3)` 
+  says that we will display lists starting with `defun` 
+  if it has a doc string as element `3` 
   (which means the fourth thing in the list).
-- The `fmt` variable which controls how we render something's
-  name and doc string.
+- The `fmt` variable which controls how we render 
+  something's name, synopsis, and doc string.
 
 
 <hr>
