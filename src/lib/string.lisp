@@ -45,9 +45,10 @@
 ; Split `str` on comma, maybe skip some cells, trim whitespace.
 (defun cells (str &optional want2skip  prep
                   (lo 0) (hi (position #\, str :start (1+ lo))))
-  (labels 
-    ((cell1() (and hi (cells str (cdr want2skip) (cdr prep) (1+ hi))))
-     (word () (funcall (or (car prep) #'identity) 
-                        (string-trim '(#\Space #\Tab #\Newline) 
-                                     (subseq str lo hi)))))
-    (if (car want2skip) (cell1) (cons (word) (cell1)))))
+  (let ((skip1 (pop want2skip))
+        (prep1 (or (pop prep) #'identity)))
+   (labels  (
+     (cell1() (and hi (cells str want2skip prep (1+ hi))))
+     (word () (funcall prep1 (string-trim '(#\Space #\Tab #\Newline) 
+                                           (subseq str lo hi)))))
+    (if skip1 (cell1) (cons (word) (cell1))))))
