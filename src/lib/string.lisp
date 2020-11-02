@@ -21,7 +21,7 @@
     (cons (string-trim '(#\Space #\Tab #\Newline) (subseq str lo hi))
           (and hi (cells str (cdr want2skip) (1+ hi))))))
 
-defmacro with-csv ((lst file) &body body)
+(defmacro with-csv ((lst file) &body body)
   "Iterate over a csv file, return a list of cells for each row."
   (let ((mem  (gensym)) (line (gensym)) (str (gensym)))
     `(let (,line (,mem (make-xpect)))

@@ -2,62 +2,6 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # [./lib/string.lisp](/src/./lib/string.lisp)
-- [o](#o) : Easy print for a list of things.
-- [lines](#lines) : Split a string into a list of lines, trimming whitespace.
-- [cells](#cells) : Split `str` on comma, maybe skip some cells, trim whitespace.
-
-### o
-
-_Synopsis:_ <b>`(o &rest l)`</b>  
-Easy print for a list of things.
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defun o (&rest l) "" (format t "~{~a~^, ~}" l))
-```
-</details></ul>
-
-### lines
-
-_Synopsis:_ <b>`(lines s &optional (lo 0)
-                 (hi (position #\newline s :start (1+ lo))))`</b>  
-Split a string into a list of lines, trimming whitespace.
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defun lines (s &optional (lo 0) (hi (position #\newline s :start (1+ lo))))
-  ""
-  (cons (cells (subseq s lo hi))
-        (if hi
-            (lines s (1+ hi)))))
-```
-</details></ul>
-
-### cells
-
-_Synopsis:_ <b>`(cells str &optional want2skip (lo 0)
-                 (hi (position #\, str :start (1+ lo))))`</b>  
-Split `str` on comma, maybe skip some cells, trim whitespace.
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defun cells
-       (str &optional want2skip (lo 0) (hi (position #\, str :start (1+ lo))))
-  ""
-  (if (car want2skip)
-      (and hi (cells str (cdr want2skip) (1+ hi)))
-      (cons (string-trim '(#\  #\tab #\newline) (subseq str lo hi))
-            (and hi (cells str (cdr want2skip) (1+ hi))))))
-```
-</details></ul>
-
-Iterate over a csv file, return a list of cells for each row.
 
 <hr>
 
