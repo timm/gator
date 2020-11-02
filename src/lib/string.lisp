@@ -21,10 +21,19 @@
     (cons (string-trim '(#\Space #\Tab #\Newline) (subseq str lo hi))
           (and hi (cells str (cdr want2skip) (1+ hi))))))
 
-(defstruct xpect "stores expectation of columns" want2skip size)
+defmacro with-csv ((lst file) &body body)
+  "Iterate over a csv file, return a list of cells for each row."
+  (let ((mem  (gensym)) (line (gensym)) (str (gensym)))
+    `(let (,line (,mem (make-xpect)))
+       (with-open-file (,str ,file)
+         (loop while (setf ,line (read-line ,str nil)) do
+            (if (> (length ,line) 0)
+              (let ((,lst (add ,mem ,line)))
+ 
+; some slave functions for with-csv
+(defstruct xpect want2skip size)
 
 (defmethod add ((obj xpect) str)
-  "Return a row same size as row1. Skip columns staring with '?'"
   (with-slots (want2skip size) obj
     (let ((lst (cells str want2skip)))
       (if size ; first time through, "size" is nil
@@ -35,12 +44,4 @@
                 size       (length lst))))
       lst)))
 
-(defmacro with-csv ((lst file) &body body)
-  "Iterate over a csv file, return a list of cells for each row."
-  (let ((mem  (gensym)) (line (gensym)) (str (gensym)))
-    `(let (,line (,mem (make-xpect)))
-       (with-open-file (,str ,file)
-         (loop while (setf ,line (read-line ,str nil)) do
-            (if (> (length ,line) 0)
-              (let ((,lst (add ,mem ,line)))
-                ,@body)))))))
+(               ,@body)))))))

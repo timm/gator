@@ -5,9 +5,6 @@
 - [o](#o) : Easy print for a list of things.
 - [lines](#lines) : Split a string into a list of lines, trimming whitespace.
 - [cells](#cells) : Split `str` on comma, maybe skip some cells, trim whitespace.
-- [xpect](#xpect) : stores expectation of columns
-- [add](#add) : Return a row same size as row1. Skip columns staring with '?'
-- [with-csv](#with-csv) : Iterate over a csv file, return a list of cells for each row.
 
 ### o
 
@@ -60,66 +57,7 @@ Split `str` on comma, maybe skip some cells, trim whitespace.
 ```
 </details></ul>
 
-### xpect
-
-_Synopsis:_ <b>`(xpect . xpect)`</b>  
-stores expectation of columns
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defstruct xpect "" want2skip size)
-```
-</details></ul>
-
-### add
-
-_Synopsis:_ <b>`(add (obj xpect) str)`</b>  
-Return a row same size as row1. Skip columns staring with '?'
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defmethod add ((obj xpect) str)
-  ""
-  (with-slots (want2skip size)
-      obj
-    (let ((lst (cells str want2skip)))
-      (if size
-          (assert (eql size (length lst)))
-          (labels ((skip (x)
-                     (eql #\? (char x 0))))
-            (setf want2skip
-                    (loop for x in lst
-                          collect (skip x))
-                  lst (remove-if #'skip lst)
-                  size (length lst))))
-      lst)))
-```
-</details></ul>
-
-### with-csv
-
-_Synopsis:_ <b>`(with-csv (lst file) &body body)`</b>  
 Iterate over a csv file, return a list of cells for each row.
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defmacro with-csv ((lst file) &body body)
-  ""
-  (let ((mem (gensym)) (line (gensym)) (str (gensym)))
-    `(let (,line (,mem (make-xpect)))
-       (with-open-file (,str ,file)
-         (loop while (setf ,line (read-line ,str nil))
-               do (if (> (length ,line) 0)
-                      (let ((,lst (add ,mem ,line)))
-                        ,@body)))))))
-```
-</details></ul>
 
 <hr>
 
