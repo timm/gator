@@ -14,14 +14,18 @@
         (if hi (lines s (1+ hi)))))
 
 (defun cells (str &optional (lo 0) (hi (position #\, str :start (1+ lo))))
+  "Split str on `,`; kill white space; return list of result."
   (cons (string-trim '(#\Space #\Tab #\Newline) (subseq str lo hi))
         (and hi (cells str (1+ hi)))))
 
 (defun csv (file fun)
+  "Call `fun` on values found when splitting each line. 
+   Skip columns starting with `?`. 
+   Coerce strings to numbers (if needed)."
   (with-open-file (str file) 
-    (let (how n)
+    (let (how n) ; memory across all lines
       (loop 
-        (let (vals tmp)
+        (let (vals tmp) ; memory just for one line
           (labels 
             ((add  (x f) (if f (push (funcall f x) vals)))
              (how1 (x)   (unless (eql #\? (char x 0)) 
