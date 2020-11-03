@@ -15,9 +15,7 @@
   x)
 
 (defmethod ent ((i sym))
-  (let ((e 0))
-    (with-slots (seen n) i
-      (loop for (k . v) in seen do
-         (if (> v 0)
-           (decf e (* (/ v n) (log (/ v n) 2))))))
-    e))
+  (with-slots (seen n) i
+    (- (loop for (k . v) in seen 
+             if (> v 0)
+             sum (* (/ v n) (log (/ v n) 2))))))
