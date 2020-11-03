@@ -32,6 +32,3 @@ Convenience macros."
                   (cons (cons ,x  ,else) 
                         ,alist)))))
 
-#+a(defmacro definit (((i x) &rest args) init &body how)
-    `(defmethod initialize-instance :around ((,i ,x) ,@args) ,@how
-       (call-next-method ,i ,@init)))

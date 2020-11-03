@@ -19,28 +19,30 @@
 
 (defun csv (file fun)
   "Call `fun` on values found when splitting each line. 
-   Skip columns starting with `?`. 
-   Coerce strings to numbers (if needed)."
+  Skip columns starting with `?`. 
+  Coerce strings to numbers (if needed)."
   (with-open-file (str file) 
-    (let (prep width) ; memory across all lines
-      (loop 
-        (let (vals tmp) ; memory just for one line
-          (labels 
-            ((add  (x f) (if f (push (funcall f x) vals)))
-             (prep1 (x)  (unless (eql #\? (char x 0)) 
-                           (if (member (char x 0) '(#\< #\> #\:)) 
-                             #'read-from-string #'identity)))
-             (cells (str &optional (lo 0) 
-                                   (hi (position #\, str :start (1+ lo))))
-                    (cons (string-trim '(#\Space #\Tab #\Newline) 
-                                       (subseq str lo hi))
-                          (and hi (cells str (1+ hi))))))
+    (labels
+      ((wanted (xs fs) (let ((f  (pop fs)) 
+                              (x (pop xs)))
+                          (if f (cons (funcall f x) (and xs (wanted xs fs))) 
+                                (and xs (wanted xs fs)))))
+       (prep1 (x) (unless (eql #\? (char x 0)) 
+                     (if (member (char x 0) '(#\< #\> #\$)) 
+                       #'read-from-string #'identity)))
+       (cells (str &optional (lo 0) (hi (position #\, str :start (1+ lo))))
+              (cons (string-trim '(#\Space #\Tab #\Newline) 
+                                 (subseq str lo hi))
+                    (and hi (cells str (1+ hi))))))
+      (let (prep width) ; memory across all lines
+        (loop 
+          (let (vals tmp) ; memory of this time
             (if (setf tmp (read-line str nil))
               (when (> (length tmp) 0)
                 (setf tmp  (cells tmp)
-                      prep  (or prep (mapcar #'prep1 tmp)))
-                (mapc #'add tmp prep)
-                (setf width (or  width (length vals)))
+                      prep  (or prep (mapcar #'prep1 tmp))
+                      vals  (wanted tmp prep)
+                      width (or width (length vals)))
                 (assert (eql width (length vals)))
                 (funcall fun vals))
               (return-from csv))))))))
