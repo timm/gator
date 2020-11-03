@@ -4,7 +4,7 @@
 # [./lib/string.lisp](/src/./lib/string.lisp)
 - [o](#o) : Easy print for a list of things.
 - [lines](#lines) : Split a string into a list of lines, trimming whitespace.
-- [with-csv](#with-csv) : Iterate over a csv file, return a list of cells for each row.
+- [with-csv](#with-csv) : Iteratively  return cells per line, pruning ignored columns, maybe coerce strings to nums.
 
 ### o
 
@@ -39,23 +39,40 @@ Split a string into a list of lines, trimming whitespace.
 
 ### with-csv
 
-_Synopsis:_ <b>`(with-csv (lst file &optional out) &body body)`</b>  
-Iterate over a csv file, return a list of cells for each row.
+_Synopsis:_ <b>`(with-csv (line file &optional out) &body body)`</b>  
+Iteratively  return cells per line, pruning ignored columns, maybe coerce strings to nums.
 
 <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmacro with-csv ((lst file &optional out) &body body)
+(defmacro with-csv ((line file &optional out) &body body)
   ""
-  (let ((mem (gensym)) (line (gensym)) (str (gensym)))
-    `(let (,line (,mem (make-inside-with-csv)))
+  (let ((prep (gensym)) (str (gensym)) (tmp (gensym)) (size (gensym)))
+    `(let (,line ,prep ,size)
        (with-open-file (,str ,file)
-         (loop while (setf ,line (read-line ,str nil))
-               do (if (> (length ,line) 0)
-                      (let ((,lst (add ,mem ,line)))
-                        ,@body)))
-         ,out))))
+         (loop while (setf ,tmp (read-line ,str nil))
+               do (when (> (length ,tmp) 0)
+                    (setf ,tmp (cells ,tmp)
+                          ,prep
+                            (or ,prep
+                                (mapcar
+                                 #'(lambda (x)
+                                     (unless (eql #\? (char x 0))
+                                       (if (member (char x 0) '(#\< #\> #\:))
+                                           #'read-from-string
+                                           #'identity)))
+                                 ,tmp)))
+                    (let (,line)
+                      (mapc
+                       #'(lambda (x f)
+                           (if f
+                               (push (funcall f x) ,line)))
+                       ,tmp ,prep)
+                      (setf ,size (or ,size (length ,line)))
+                      (assert (eql ,size (length ,line)))
+                      ,@body))))
+       ,out)))
 ```
 </details></ul>
 
