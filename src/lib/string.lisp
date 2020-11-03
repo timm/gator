@@ -13,30 +13,34 @@
   (cons (cells (subseq s lo hi))
         (if hi (lines s (1+ hi)))))
 
-(defun cells (str &optional (lo 0) (hi (position #\, str :start (1+ lo))))
-  "Split str on `,`; kill white space; return list of result."
-  (cons (string-trim '(#\Space #\Tab #\Newline) (subseq str lo hi))
-        (and hi (cells str (1+ hi)))))
+(defmacro with-csv ((lst file &optional out) &body body)
+  "Iterate over a csv file, return a list of cells for each row."
+   `(progn (csv ,file #'(lambda (,lst) ,@body)) ,out))
 
 (defun csv (file fun)
   "Call `fun` on values found when splitting each line. 
    Skip columns starting with `?`. 
    Coerce strings to numbers (if needed)."
   (with-open-file (str file) 
-    (let (how n) ; memory across all lines
+    (let (prep width) ; memory across all lines
       (loop 
         (let (vals tmp) ; memory just for one line
           (labels 
             ((add  (x f) (if f (push (funcall f x) vals)))
-             (how1 (x)   (unless (eql #\? (char x 0)) 
+             (prep1 (x)  (unless (eql #\? (char x 0)) 
                            (if (member (char x 0) '(#\< #\> #\:)) 
-                             #'read-from-string #'identity))))
+                             #'read-from-string #'identity)))
+             (cells (str &optional (lo 0) 
+                                   (hi (position #\, str :start (1+ lo))))
+                    (cons (string-trim '(#\Space #\Tab #\Newline) 
+                                       (subseq str lo hi))
+                          (and hi (cells str (1+ hi))))))
             (if (setf tmp (read-line str nil))
               (when (> (length tmp) 0)
                 (setf tmp  (cells tmp)
-                      how  (or how (mapcar #'how1 tmp)))
-                (mapc #'add tmp how)
-                (setf n (or  n (length vals)))
-                (assert (eql n (length vals)))
+                      prep  (or prep (mapcar #'prep1 tmp)))
+                (mapc #'add tmp prep)
+                (setf width (or  width (length vals)))
+                (assert (eql width (length vals)))
                 (funcall fun vals))
               (return-from csv))))))))
