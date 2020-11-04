@@ -24,9 +24,9 @@
   (with-open-file (str file) 
     (let ((first t) prep width) ; memory across all lines
       (labels
-        ((fromString (x) (if first
+        ((fromString (x) (if (or first (equal x "?"))
                            x 
-                           (if (equal x "?") x (read-from-string x))))
+                           (read-from-string x)))
          (wanted (xs fs &aux (f  (pop fs)) (x (pop xs)))
                  (if f 
                    (cons (funcall f x) (and xs (wanted xs fs))) 
