@@ -8,7 +8,7 @@
   (with-slots (seen most mode n) i
     (setf n   (1+ n)
           a   (has! seen x :else 0)
-          now (incf (cdr a)))
+          now (incf (cdr  a)))
     (if (> now most) 
       (setf most n
             mode x)))

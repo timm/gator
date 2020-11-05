@@ -19,7 +19,11 @@
                    ((< m2 0) 0)
                    (t (sqrt (/ m2 (- n 1)))))))
   x)
-o
+
+#|(defmethod like ((i num) vals cols y n)
+  (let ((prior 
+        (lole :w
+
 unc _Like(i,row,y, n,    prior,like,c,x,f) {
   prior = like = (n + i.K)/(i.nall + i.K*length(i.seen))
   like  = log(like)
@@ -39,3 +43,4 @@ func _MostLiked(i,row,     y,like,most,out) {
       most = like
       out  = y }}
   return out }   
+|#

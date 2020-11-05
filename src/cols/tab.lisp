@@ -3,7 +3,7 @@
 (got "../cols/num")
 (got "../cols/sym")
 
-(defstruct tab "Table" (new t) xs ys cols rows)
+(defstruct tab "Table"  cols xs ys rows)
 
 (defmethod header ((i tab) pos txt)
   (labels ((nump  (s) (member (char s 0) '(#\< #\> #\$)))
