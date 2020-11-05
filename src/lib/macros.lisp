@@ -27,8 +27,8 @@ Convenience macros."
 
 (defmacro has! (alist x &key else (test #'equal))
   "Return alist`'s entry for `x` (and if needed, create it using `init`)"
-  `(or (assoc ,x ,alist :test ,test)
-       (car (setf ,alist 
-                  (cons (cons ,x  ,else) 
-                        ,alist)))))
+  `(cdr (or (assoc ,x ,alist :test ,test)
+            (car (setf ,alist 
+                       (cons (cons ,x  ,else) 
+                             ,alist))))))
 

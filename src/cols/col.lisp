@@ -3,7 +3,7 @@
 (load "../my")
 (load "../lib/ok")
 
-(defstruct col (pos 0)  (txt "") (n 0))
+(defstruct col (pos 0)  (txt "") (n 0) (w 0))
 
 (defmethod add ((i col) (xs list))
   (dolist (x xs i) (add i x)))

@@ -19,3 +19,23 @@
                    ((< m2 0) 0)
                    (t (sqrt (/ m2 (- n 1)))))))
   x)
+o
+unc _Like(i,row,y, n,    prior,like,c,x,f) {
+  prior = like = (n + i.K)/(i.nall + i.K*length(i.seen))
+  like  = log(like)
+  for(c in i.cols.x) {
+      x = row[c]
+      if(x != "?") {
+        f = i.seen[y][c][x] 
+        like +=  log((f + i.M*prior) / (n + i.M)) }}
+  return like }
+
+func _MostLiked(i,row,     y,like,most,out) {
+  most = -10^32
+  for(y in i.seen) {
+    out = out ? out : y
+    like = _Like(i, row, y, i.seen[y][i.cols.class][y])
+    if (like > most) {
+      most = like
+      out  = y }}
+  return out }   

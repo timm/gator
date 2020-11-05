@@ -24,13 +24,12 @@
   (with-open-file (str file) 
     (let ((first t) prep width) ; memory across all lines
       (labels
-        ((fromString (x) (if (or first (equal x "?"))
-                           x 
-                           (read-from-string x)))
+        ((fromString (x) (cond(first         x)
+                              ((equal x "?") x)
+                              (t             (read-from-string x))))
          (wanted (xs fs &aux (f  (pop fs)) (x (pop xs)))
-                 (if f 
-                   (cons (funcall f x) (and xs (wanted xs fs))) 
-                   (and xs (wanted xs fs))))
+                 (if f (cons (funcall f x) (and xs (wanted xs fs))) 
+                       (and xs (wanted xs fs))))
          (cells (str &optional (lo 0) (hi (position #\, str :start (1+ lo))))
                 (cons (string-trim '(#\Space #\Tab #\Newline) (subseq str lo hi))
                       (and hi (cells str (1+ hi)))))
