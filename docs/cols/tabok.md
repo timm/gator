@@ -1,21 +1,7 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# [./cols/tab.lisp](/src/./cols/tab.lisp)
-- [tab](#tab) : Table
-
-### tab
-
-_Synopsis:_ <b>`(tab . tab)`</b>  
-Table
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defstruct tab "" cols xs ys rows)
-```
-</details></ul>
+# [./cols/tabok.lisp](/src/./cols/tabok.lisp)
 
 <hr>
 

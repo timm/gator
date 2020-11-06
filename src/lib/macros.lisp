@@ -25,10 +25,10 @@ Convenience macros."
   "Iterate over `key` `values` in a `hash` table, executing `body`."
   `(maphash #'(lambda (,key ,value) ,@body) ,hash))
 
-(defmacro has! (alist x &key else (test #'equal))
+(defmacro assoc! (alist x &key if-needed (test #'equal))
   "Return alist`'s entry for `x` (and if needed, create it using `init`)"
   `(or (assoc ,x ,alist :test ,test)
        (car (setf ,alist 
-                  (cons (cons ,x  ,else) 
+                  (cons (cons ,x  ,if-needed) 
                         ,alist)))))
 

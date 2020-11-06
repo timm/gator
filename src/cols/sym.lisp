@@ -7,7 +7,7 @@
 (defmethod add1 ((i sym) x)
   (with-slots (seen most mode n) i
     (setf n   (1+ n)
-          a   (has! seen x :else 0)
+          a   (assoc! seen x :if-needed 0)
           now (incf (cdr  a)))
     (if (> now most) 
       (setf most n
@@ -16,6 +16,5 @@
 
 (defmethod ent ((i sym))
   (with-slots (seen n) i
-    (- (loop for (k . v) in seen 
-             if (> v 0)
+    (- (loop for (k . v) in seen if (> v 0)
              sum (* (/ v n) (log (/ v n) 2))))))

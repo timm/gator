@@ -21,9 +21,7 @@ The system is controlled by two variables:
   something's name, synopsis, and doc string.
 "
 
-(let ((want '((defun    . 3) (defclass  . 3)
-              (defmacro . 3) (defstruct . 2) (defmethod . 3)))
-      (fmt  
+(defvar *fmt*
 "~%### ~(~a~)
 
 _Synopsis:_ <b>`~(~S~)`</b>  
@@ -37,22 +35,32 @@ _Synopsis:_ <b>`~(~S~)`</b>
 ```
 </details></ul>
 ")
-      thing)
- (format  t "~a" (with-output-to-string (main)
-  (format t "~a" (with-output-to-string (top)
-   (loop while (setf thing (read-preserving-whitespace t nil)) 
-    do
-    (when (stringp thing) 
-      (format main "~%~a~%" thing))
-    (when (listp thing)
-      (when (member (car thing) want :key #'car)
-        (let* ((x      (first  thing))
-               (f      (second thing))
-               (pos    (cdr (assoc x want)))
-               (s      (elt    thing pos))
-               (synopsis (cons f (elt thing (1- pos)))))
-          (when (stringp s)
-            (setf (elt thing pos) "")
-            (format main fmt f  synopsis s thing)
-            (format top "- [~(~a~)](#~(~a~)) : ~a~%" 
-                    f f (subseq s 0 (position #\Newline s)))))))))))))
+
+(defvar *want* '((defun    . 3) (defclass  . 3)
+                 (defmacro . 3) (defstruct . 2) (defmethod . 3)))
+
+(defun worker (main top thing)
+  (when (stringp thing) 
+    (format main "~%~a~%" thing))
+  (when (listp thing)
+    (when (member (car thing) *want* :key #'car)
+      (let* ((x      (first  thing))
+             (f      (second thing))
+             (pos    (cdr (assoc x *want*)))
+             (s      (elt    thing pos))
+             (synopsis (cons f (elt thing (1- pos)))))
+        (when (stringp s)
+          (setf (elt thing pos) "")
+          (format main *fmt* f  synopsis s thing)
+          (format top "- [~(~a~)](#~(~a~)) : ~a~%" 
+                  f f (subseq s 0 (position #\Newline s))))))
+    (when (member (car thing)'(label let))
+      (setf thing (cddr thing))
+      (dolist (one (cddr thing) (worker main top one))))))
+
+(let (thing)
+  (format  t "~a" (with-output-to-string (main)
+     (format t "~a" (with-output-to-string (top)
+        (loop while (setf thing (read-preserving-whitespace t nil)) 
+              do (worker main top thing)))))))
+

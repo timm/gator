@@ -4,7 +4,8 @@
 # [./lib/string.lisp](/src/./lib/string.lisp)
 - [o](#o) : Easy print for a list of things.
 - [lines](#lines) : Split a string into a list of lines, trimming whitespace.
-- [with-csv](#with-csv) : Iteratively  return cells per line, pruning ignored columns, maybe coerce strings to nums.
+- [with-csv](#with-csv) : Iterate over a csv file, return a list of cells for each row.
+- [csv](#csv) : Call `fun` on values found when splitting each line. 
 
 ### o
 
@@ -39,40 +40,61 @@ Split a string into a list of lines, trimming whitespace.
 
 ### with-csv
 
-_Synopsis:_ <b>`(with-csv (line file &optional out) &body body)`</b>  
-Iteratively  return cells per line, pruning ignored columns, maybe coerce strings to nums.
+_Synopsis:_ <b>`(with-csv (lst file &optional out) &body body)`</b>  
+Iterate over a csv file, return a list of cells for each row.
 
 <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmacro with-csv ((line file &optional out) &body body)
+(defmacro with-csv ((lst file &optional out) &body body)
   ""
-  (let ((prep (gensym)) (str (gensym)) (tmp (gensym)) (size (gensym)))
-    `(let (,line ,prep ,size)
-       (with-open-file (,str ,file)
-         (loop while (setf ,tmp (read-line ,str nil))
-               do (when (> (length ,tmp) 0)
-                    (setf ,tmp (cells ,tmp)
-                          ,prep
-                            (or ,prep
-                                (mapcar
-                                 #'(lambda (x)
-                                     (unless (eql #\? (char x 0))
-                                       (if (member (char x 0) '(#\< #\> #\:))
-                                           #'read-from-string
-                                           #'identity)))
-                                 ,tmp)))
-                    (let (,line)
-                      (mapc
-                       #'(lambda (x f)
-                           (if f
-                               (push (funcall f x) ,line)))
-                       ,tmp ,prep)
-                      (setf ,size (or ,size (length ,line)))
-                      (assert (eql ,size (length ,line)))
-                      ,@body))))
-       ,out)))
+  `(progn (csv ,file #'(lambda (,lst) ,@body)) ,out))
+```
+</details></ul>
+
+### csv
+
+_Synopsis:_ <b>`(csv file fun)`</b>  
+Call `fun` on values found when splitting each line. 
+  Skip columns starting with `?`. 
+  Coerce strings to numbers (if needed).
+
+<ul>
+<details><summary>(..)</summary>
+
+```lisp
+(defun csv (file fun)
+  ""
+  (with-open-file (str file)
+    (let ((first t) prep width)
+      (labels ((fromstring (x)
+                 (cond (first x) ((equal x "?") x) (t (read-from-string x))))
+               (wanted (xs fs &aux (f (pop fs)) (x (pop xs)))
+                 (if f
+                     (cons (funcall f x) (and xs (wanted xs fs)))
+                     (and xs (wanted xs fs))))
+               (cells
+                   (str &optional (lo 0) (hi (position #\, str :start (1+ lo))))
+                 (cons (string-trim '(#\  #\tab #\newline) (subseq str lo hi))
+                       (and hi (cells str (1+ hi)))))
+               (prep1 (x)
+                 (unless (eql #\? (char x 0))
+                   (if (member (char x 0) '(#\< #\> #\$))
+                       #'fromstring
+                       #'identity))))
+        (loop
+         (let (vals tmp)
+           (if (setf tmp (read-line str nil))
+               (when (> (length tmp) 0)
+                 (setf tmp (cells tmp)
+                       prep (or prep (mapcar #'prep1 tmp))
+                       vals (wanted tmp prep)
+                       width (or width (length vals)))
+                 (assert (eql width (length vals)))
+                 (funcall fun vals)
+                 (setf first nil))
+               (return-from csv))))))))
 ```
 </details></ul>
 
