@@ -20,6 +20,15 @@
                    (t (sqrt (/ m2 (- n 1)))))))
   x)
 
+(defmethod like ((i num) x &optional m prior)
+  (let ((z   (expt 10 -64))
+        (v   (expt (? i sd) 2))
+        (nom (exp (/ (expt (- x (? i mu)) 2)
+                     (+ z (* -2 v)))))
+        (dnom (sqrt (* 2 pi v))))
+    (/ nom (+ z denom))))
+
+
 #|(defmethod like ((i num) vals cols y n)
   (let ((prior 
         (lole :w

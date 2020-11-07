@@ -23,6 +23,7 @@
                step .5 
                cohen .3 
                trivial 1.05)
+    id -1 
     seed 1
     yes   (    it ""
                pass 0

@@ -19,6 +19,6 @@
     (- (loop for (k . v) in seen if (> v 0)
              sum (* (/ v n) (log (/ v n) 2))))))
 
-
-(defmethod like ((i sym) x)
-)
+(defmethod like ((i sym) x &optional m prior)
+   (/ (+ (or (cdr (assoc x seen)) 0) (* m prior)))
+      (+ (? i n) m)))

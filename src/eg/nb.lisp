@@ -16,9 +16,9 @@
                       (* (? i k) (length (? i few))))))
          (like  (log prior)))
     (dolist (col cols like)
-      (let ((val     (nth (? col pos0 lst))))
+      (let ((val (nth (? col pos) lst))))
         (if (not (equal val "?"))
-          (incf (log (like col val prior))))))))
+          (incf (log (like col val (? i m) prior))))))))
 
 (defmethod guess ((i nb)  lst &optional (cols (? i all cols))) 
   (let (out 
@@ -31,12 +31,13 @@
                     out k))))
     out))
 
-(defmethod data ((i nb) lst &aux (k (klass (? i all) lst)))
-  (when (< (decf (? i skip)) 0) 
-    (adds (? i log) want (guess i lst)))
-  (add (? i all) lst)
-  (add (cdr (assoc! l (? i few) want :if-needed (clone (? i all))))
-       lst))
+(defmethod data ((i nb) lst)
+  (let ((k (klass (? i all) lst))
+        (one (cdr (assoc! l (? i few) want :if-needed (clone (? i all))))))
+    (when (< (decf (? i skip)) 0) 
+      (adds (? i log) want (guess i lst)))
+    (add (? i all) lst)
+    (add one lst))
 
 (defmethod fileIn ((i tab) file)
   (let ((log (make-abcd)))
@@ -44,25 +45,3 @@
       (if (i all cols)
         (data i line)
         (header (? i all) line)))))
-
-#|
-func _Like(i,row,y, n,    prior,like,c,x,f) {
-  prior = like = (n + i.K)/(i.nall + i.K*length(i.seen))
-  like  = log(like)
-  for(c in i.cols.x) {
-      x = row[c]
-      if(x != "?") {
-        f = i.seen[y][c][x] 
-        like +=  log((f + i.M*prior) / (n + i.M)) }}
-  return like }
-
-func _MostLiked(i,row,     y,like,most,out) {
-  most = -10^32
-  for(y in i.seen) {
-    out = out ? out : y
-    like = _Like(i, row, y, i.seen[y][i.cols.class][y])
-    if (like > most) {
-      most = like
-      out  = y }}
-  return out }
-|#
