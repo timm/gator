@@ -5,7 +5,7 @@
 - [?](#?) : Simple accessors to nested slots.    
 - [do-items](#do-items) : Iterate over all positions and items in a list.
 - [hop](#hop) : Iterate over `key` `values` in a `hash` table, executing `body`.
-- [has!](#has!) : Return alist`'s entry for `x` (and if needed, create it using `init`)
+- [assoc!](#assoc!) : Return alist`'s entry for `x` (and if needed, create it using `init`)
 
 ## Macros
 
@@ -61,19 +61,19 @@ Iterate over `key` `values` in a `hash` table, executing `body`.
 ```
 </details></ul>
 
-### has!
+### assoc!
 
-_Synopsis:_ <b>`(has! alist x &key else (test #'equal))`</b>  
+_Synopsis:_ <b>`(assoc! alist x &key if-needed (test #'equal))`</b>  
 Return alist`'s entry for `x` (and if needed, create it using `init`)
 
 <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmacro has! (alist x &key else (test #'equal))
+(defmacro assoc! (alist x &key if-needed (test #'equal))
   ""
   `(or (assoc ,x ,alist :test ,test)
-       (car (setf ,alist (cons (cons ,x ,else) ,alist)))))
+       (car (setf ,alist (cons (cons ,x ,if-needed) ,alist)))))
 ```
 </details></ul>
 

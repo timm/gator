@@ -2,20 +2,6 @@
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
 # [./eg/nb.lisp](/src/./eg/nb.lisp)
-- [nb](#nb) : Naive Bayes
-
-### nb
-
-_Synopsis:_ <b>`(nb . nb)`</b>  
-Naive Bayes
-
-<ul>
-<details><summary>(..)</summary>
-
-```lisp
-(defstruct nb "" rows cols)
-```
-</details></ul>
 
 <hr>
 

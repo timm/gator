@@ -15,8 +15,8 @@
     (let ((tmp (make-instance (if (nump txt) 'num 'sym) 
                          :pos pos :txt txt 
                          :w (if (eql #\< (char txt 0)) -1 1))))
-      (if (klassp txt) (setf (? i klas!) tmp))
-      (if (goalp txt)  (push tmp (? i ys)) (push tmp (? i  s)))))
+      (if (klassp txt) (setf (? i klass!) tmp))
+      (if (goalp txt)  (push tmp (? i ys)) (push tmp (? i xs)))))
 
   (defmethod headers ((i tab) lst &aux (pos 0))
     (setf (? i cols) 

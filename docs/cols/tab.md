@@ -4,6 +4,8 @@
 # [./cols/tab.lisp](/src/./cols/tab.lisp)
 - [tab](#tab) : Table
 
+Manage tables of rows and columns.
+
 ### tab
 
 _Synopsis:_ <b>`(tab . tab)`</b>  
@@ -13,7 +15,7 @@ Table
 <details><summary>(..)</summary>
 
 ```lisp
-(defstruct tab "" cols xs ys rows)
+(defstruct tab "" (keep t) cols klass! xs ys rows)
 ```
 </details></ul>
 
