@@ -11,7 +11,15 @@
   (all (make-tab)) few (skip 20) (m 1) (k 2) (log (make-abcd)))
 
 (defmethod guess1((i nb)  lst n cols)
-  (let ((prior (/ (+  
+  (let* ((prior (/ (+ n (? i k)) 
+                   (+ (length (? i all rows)) 
+                      (* (? i k) (length (? i few))))))
+         (like  (log prior)))
+    (dolist (col cols like)
+      (let ((val     (nth (? col pos0 lst))))
+        (if (not (equal val "?"))
+          (incf (log (guess1 col val prior))))))))
+
 (defmethod guess ((i nb)  lst &optional (cols (? i all cols))) 
   (let (out 
          (most most-negative-fixnum))  
@@ -32,7 +40,7 @@
 
 (defmethod fileIn ((i tab) file)
   (let ((log (make-abcd)))
-    (with-csv (line file) 
+    (with-csv (line file i) 
       (if (i all cols)
         (data i line)
         (header (? i all) line)))))
