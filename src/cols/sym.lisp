@@ -18,3 +18,7 @@
   (with-slots (seen n) i
     (- (loop for (k . v) in seen if (> v 0)
              sum (* (/ v n) (log (/ v n) 2))))))
+
+
+(defmethod like ((i sym) x)
+)

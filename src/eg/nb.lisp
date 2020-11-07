@@ -18,14 +18,14 @@
     (dolist (col cols like)
       (let ((val     (nth (? col pos0 lst))))
         (if (not (equal val "?"))
-          (incf (log (guess1 col val prior))))))))
+          (incf (log (like col val prior))))))))
 
 (defmethod guess ((i nb)  lst &optional (cols (? i all cols))) 
   (let (out 
          (most most-negative-fixnum))  
     (loop for (k . tbl) in  (? i few) do
           (setf out (or out k))
-          (let ((like (guess1 i lst cols) (? i all klass n) cols))
+          (let ((like (guess i lst cols) (? i all klass n) cols))
             (if (> like most)
               (setf most like 
                     out k))))
