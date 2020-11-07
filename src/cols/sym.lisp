@@ -7,7 +7,7 @@
 (defmethod add1 ((i sym) x)
   (with-slots (seen most mode n) i
     (setf n   (1+ n)
-          a   (assoc! seen x :if-needed 0)
+          a   (assoc! x seen :if-needed 0)
           now (incf (cdr  a)))
     (if (> now most) 
       (setf most n
