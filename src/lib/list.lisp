@@ -1,7 +1,7 @@
 (load "../lib/maths")
 
 (defun assocs (k l)
-  (cdr (assoc k l :test #'equal)))
+  (assoc k l :test #'equal))
 
 (defun jumble (all &key most (key #'identity))
   (labels ((either () (< .5E8 (randi 1E8))))
@@ -9,3 +9,6 @@
       (if most
         (subseq tmp 0 (min most (length all)))
         tmp))))
+
+(defun after (x lst &key (test #'equal))
+  (cadr (member x lst :test test)))

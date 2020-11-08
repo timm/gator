@@ -165,10 +165,10 @@ two, recurs on each half."
         (o (? r1 cells) (car x) (? (cadr x) cells)
            (car y) (? (cadr y) cells))))))
 
-(aif (assocs "--div" (cli)) 
-  (print (assocs "-data" it)))
-(aif (assocs "--fred"(cli)) (print it))
-(aif (assocs 'jain (cli)) (print it))
+(what (assocs "--div" (cli)) 
+  (aif (after "-data" at) (print it)))
+(what (assocs "--fred"(cli)) (print at))
+(what (assocs 'jain (cli)) (print at))
 
 
 ;(aif (member "--data" (args) :test #'equal) (?data (second it)))

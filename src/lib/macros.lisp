@@ -36,6 +36,6 @@ Convenience macros."
   `(let ((it ,test))
      (if it ,then ,else)))
 
-(defmacro whan (test @rest body)
-  `(let ((it ,test))
-     (when it ,@body)))
+(defmacro what (test &rest body)
+  `(let ((at ,test))
+     (when at ,@body)))

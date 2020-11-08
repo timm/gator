@@ -23,10 +23,6 @@
           (push `(,x) out)
           (setf (cdar out) (append (cdar out) (list x))))))))
 
-(aif (assocs "--main" (cli)) (print it))
-(aif (assocs "--fred"(cli)) (print it))
-(aif (assocs 'jain (cli)) (print it))
-
 (defun lines (s &optional (lo 0) (hi (position #\Newline s :start (1+ lo))))
   "Split a string into a list of lines, trimming whitespace."
   (cons (cells (subseq s lo hi))
