@@ -23,7 +23,7 @@
   "Reading data from disk, storing in `rows`, summarized the columns (see `cols`).
 
   First row names the columns. 
-  Column names containing `<` or `>` are goals to be minimized or mazimized.
+  Column names containing `<` or `>` are goals to be minimized or maximized.
   Column names containing `<` or `>` or `$` are `num`erics and the rest are `sym` bols."
   (labels 
     ((nump  (x) (has x #\> #\< #\$))
