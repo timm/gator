@@ -63,14 +63,14 @@ Iterate over `key` `values` in a `hash` table, executing `body`.
 
 ### assoc!
 
-_Synopsis:_ <b>`(assoc! alist x &key if-needed (test #'equal))`</b>  
+_Synopsis:_ <b>`(assoc! x alist &key if-needed (test #'equal))`</b>  
 Return alist`'s entry for `x` (and if needed, create it using `init`)
 
 <ul>
 <details><summary>(..)</summary>
 
 ```lisp
-(defmacro assoc! (alist x &key if-needed (test #'equal))
+(defmacro assoc! (x alist &key if-needed (test #'equal))
   ""
   `(or (assoc ,x ,alist :test ,test)
        (car (setf ,alist (cons (cons ,x ,if-needed) ,alist)))))

@@ -16,7 +16,7 @@ Easy print for a list of things.
 <details><summary>(..)</summary>
 
 ```lisp
-(defun o (&rest l) "" (format t "~{~a~^, ~}" l))
+(defun o (&rest l) "" (format t "~{~a~^, ~}~%" l))
 ```
 </details></ul>
 

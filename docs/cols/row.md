@@ -1,22 +1,7 @@
 <a name=top>
 <img width=300 align=right src="https://raw.githubusercontent.com/timm/gator/main/docs/img/gator.png">
 
-# [./cols/sym.lisp](/src/./cols/sym.lisp)
-Unhandled TYPE-ERROR in thread #<SB-THREAD:THREAD "main thread" RUNNING
-                                  {10008B8083}>:
-  The value
-    T
-  is not of type
-    STREAM
-  when binding STREAM
-
-Backtrace for: #<SB-THREAD:THREAD "main thread" RUNNING {10008B8083}>
-0: (SB-INT:SIMPLE-READER-ERROR T "unmatched close parenthesis") [more]
-1: (SB-IMPL::READ-RIGHT-PAREN T #<unused argument>)
-2: (SB-IMPL::READ-MAYBE-NOTHING T #\))
-3: (SB-IMPL::%READ-PRESERVING-WHITESPACE T NIL NIL T)
-4: (SB-IMPL::%READ-PRESERVING-WHITESPACE T NIL NIL NIL)
-5: ((LAMBDA NIL :IN "/Users/timm/gits/timm/gator/src/lib/doc.lisp"))
+# [./cols/row.lisp](/src/./cols/row.lisp)
 
 <hr>
 
