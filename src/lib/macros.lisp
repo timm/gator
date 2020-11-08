@@ -32,3 +32,6 @@ Convenience macros."
                   (cons (cons ,x  ,if-needed) 
                         ,alist)))))
 
+(defmacro aif (test then &optional else)
+  `(let ((it ,test))
+     (if it ,then ,else)))

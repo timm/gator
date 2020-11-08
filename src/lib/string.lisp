@@ -6,7 +6,7 @@
 
 (defun o (&rest l) 
   "Easy print for a list of things."
-  (format t "~{~a~^, ~}" l))
+  (format t "~{~a~^, ~}~%" l))
 
 (defun lines (s &optional (lo 0) (hi (position #\Newline s :start (1+ lo))))
   "Split a string into a list of lines, trimming whitespace."
