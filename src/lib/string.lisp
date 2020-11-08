@@ -3,10 +3,29 @@
 
 (load "../my")
 (got  "../lib/macros")
+(got  "../lib/os")
+(got  "../lib/list")
 
 (defun o (&rest l) 
   "Easy print for a list of things."
   (format t "~{~a~^, ~}~%" l))
+
+(defun readfrom (s)
+  (let ((tmp (read-from-string s)))
+    (if (typep tmp 'number) tmp s)))
+
+(defun cli(&optional (all (copy-list (mapcar #'readfrom (args)))))
+  (labels ((groupp (x) (and (stringp x) (>= (length x) 2) 
+                            (equal "--" (subseq x 0 2)))))
+    (let ((out '((main))))
+      (dolist (x all out)
+        (if (groupp x)
+          (push `(,x) out)
+          (setf (cdar out) (append (cdar out) (list x))))))))
+
+(aif (assocs "--main" (cli)) (print it))
+(aif (assocs "--fred"(cli)) (print it))
+(aif (assocs 'jain (cli)) (print it))
 
 (defun lines (s &optional (lo 0) (hi (position #\Newline s :start (1+ lo))))
   "Split a string into a list of lines, trimming whitespace."

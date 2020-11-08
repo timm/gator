@@ -35,3 +35,7 @@ Convenience macros."
 (defmacro aif (test then &optional else)
   `(let ((it ,test))
      (if it ,then ,else)))
+
+(defmacro whan (test @rest body)
+  `(let ((it ,test))
+     (when it ,@body)))

@@ -23,8 +23,11 @@
   "Reading data from disk, storing in `rows`, summarized the columns (see `cols`).
 
   First row names the columns. 
-  Column names containing `<` or `>` are goals to be minimized or maximized.
-  Column names containing `<` or `>` or `$` are `num`erics and the rest are `sym` bols."
+  - Column names containing `<` or `>` 
+    are goals to be minimized or maximized.
+  - Column names containing `<` or `>` 
+    or `$` are `num`erics and the rest are `sym` bols.
+  "
   (labels 
     ((nump  (x) (has x #\> #\< #\$))
      (goalp (x) (has x #\> #\< #\!))
@@ -73,7 +76,7 @@
   If both values are missing, assuming max distance. Else, use `dist`."
   (let ((x (nth (? i pos) (? r1 cells)))
         (y (nth (? i pos) (? r2 cells))))
-    (if (and (equal x "?") (equal y "?")) 1 (dist1 i x y cols))))
+    (if (and (equal x "?") (equal y "?")) 1 (dist1 i x y))))
 
 (defmethod dist1 ((i sym) x y) 
   (if (equal x y) 0 1))
@@ -89,13 +92,13 @@
 ;;;;----------------------------------------------------
 "### Queries over rows"
 
-(defmethod dist ((r1 row) (r2 row) &key cols)
+(defmethod gap ((r1 row) (r2 row) &key cols)
   "Distance between two rows, using `cols`."
   (expt (/ (loop for c in cols sum (expt (dist c r1 r2) (? r1 pp)))
            (length cols))
         (/ 1 (? r1 pp))))
 
-(defmethod far ((r1 row) (enough 0.9) &key rows cols)
+(defmethod far ((r1 row) &key (enough 0.9) rows cols)
   "Find a `row` in `rows`  far away from `r1`, ignoring outliers."
   (elt (round (* n (length all)))
        (dists r1 :rows rows :cols cols)))
@@ -104,7 +107,7 @@
   "Sort all `rows` by their distance to `r1` (using `cols`)." 
   (dolist (r2 rows)loop for r2 in rows 
     (unless (eql  (? r1 id) (? r2 id)) 
-      (push (list (dist r1 r2 :cols cols) r2) out)))
+      (push (list (gap r1 r2 :cols cols) r2) out)))
   (sort out #'< :key #'car))
 
 ;;;;----------------------------------------------------
@@ -113,7 +116,7 @@
 Find two distant points, divide data by their distance to those
 two, recurs on each half."
 
-(defmethod add ((i div) tbl &key (lvl 0)
+(defmethod grow ((i div) tbl &key (lvl 0)
                         (cols (? i tbl xs)) 
                         (rows (jumble (? tbl rows :most (? i most))))
                         (min  (expt (length rows) (? i min))))
@@ -141,8 +144,8 @@ two, recurs on each half."
                  (or (< (length l) (length rows))
                      (< (length h) (length rows))))
         (setf 
-          lo (add (make-div) tbl :lvl lvl :min min :cols cols rows: l)
-          hi (add (make-div) tbl :lvl lvl :min min :cols cols rows: h))
+          lo (grow (make-div) tbl :lvl lvl :min min :cols cols :rows l)
+          hi (grow (make-div) tbl :lvl lvl :min min :cols cols :rows h))
         i))))
 
 ;;;;---------------------------------------------
@@ -162,6 +165,11 @@ two, recurs on each half."
         (o (? r1 cells) (car x) (? (cadr x) cells)
            (car y) (? (cadr y) cells))))))
 
-(aif (member "--data" (args) :test #'equal) 
- (?dists (second it)))
+(aif (assocs "--div" (cli)) 
+  (print (assocs "-data" it)))
+(aif (assocs "--fred"(cli)) (print it))
+(aif (assocs 'jain (cli)) (print it))
+
+
+;(aif (member "--data" (args) :test #'equal) (?data (second it)))
 
