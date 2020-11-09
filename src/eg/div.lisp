@@ -66,7 +66,7 @@
   x)
 
 (defmethod add1 ((i num) x)
-  "Numeric columns are sumamrized with thei `lo` and `hi` value."
+  "Numeric columns are summarized with their `lo` and `hi` value."
   (setf (? i lo) (min x (? i lo))
         (? i hi) (max x (? i hi))))
 
@@ -123,7 +123,7 @@ two, recurs on each half."
   "Project `row` to point `x' between 2 distant points `north` and `south`."
   (with-slots (north south c mid here lo hi) i
     (setf here  (clone tbl)
-          north (far (car one)    :cols cols :rows rpws)
+          north (far (car one)    :cols cols :rows rows)
           south (far north        :cols cols :rows rows)
           c     (dist north south :cols cols))
     (dolist (row rows)
