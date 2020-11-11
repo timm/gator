@@ -98,11 +98,6 @@
            (length cols))
         (/ 1 (? r1 pp))))
 
-(defmethod far ((r1 row) &key (enough 0.9) rows cols)
-  "Find a `row` in `rows`  far away from `r1`, ignoring outliers."
-  (elt (round (* n (length all)))
-       (dists r1 :rows rows :cols cols)))
-     
 (defmethod dists ((r1 row) &key rows cols &aux out)
   "Sort all `rows` by their distance to `r1` (using `cols`)." 
   (dolist (r2 rows)loop for r2 in rows 
@@ -110,6 +105,11 @@
       (push (list (gap r1 r2 :cols cols) r2) out)))
   (sort out #'< :key #'car))
 
+(defmethod far ((r1 row) &key (enough 0.9) rows cols)
+  "Find a `row` in `rows`  far away from `r1`, ignoring outliers."
+  (elt (round (* enough (length all)))
+       (dists r1 :rows rows :cols cols)))
+     
 ;;;;----------------------------------------------------
 "### Recursive 2-way slot
 
@@ -123,7 +123,7 @@ two, recurs on each half."
   "Project `row` to point `x' between 2 distant points `north` and `south`."
   (with-slots (north south c mid here lo hi) i
     (setf here  (clone tbl)
-          north (far (car one)    :cols cols :rows rows)
+          north (far (car rows)    :cols cols :rows rows)
           south (far north        :cols cols :rows rows)
           c     (dist north south :cols cols))
     (dolist (row rows)
