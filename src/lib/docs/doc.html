@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>doc.lisp</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>doc.lisp</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span> 
+<span class="c1">; My simple documenter</span>
+<span class="c1">;</span>
+<span class="c1">; Convert lisp code to markdown.  Strings are printed verbatim.</span>
+<span class="c1">; defuns, defmacros, defmethods, defclass, defstructs get their doco</span>
+<span class="c1">; string pulled, then topped with a &amp;lt;h3&gt; heading. And a table of</span>
+<span class="c1">; contents is added to the top of page.</span>
+<span class="c1">;</span>
+<span class="c1">; Note: 30 lines of code! :wink:</span>
+<span class="c1">;</span>
+<span class="c1">; Usage: </span>
+<span class="c1">;</span>
+<span class="c1">;     cat file.lisp | lisp doc.lisp</span>
+<span class="c1">;</span>
+<span class="c1">; The system is controlled by two variables:</span>
+<span class="c1">;</span>
+<span class="c1">; - The `want` variable.  An entry (e.g.) `(defun . 3)` </span>
+<span class="c1">;   says that we will display lists starting with `defun` </span>
+<span class="c1">;   if it has a doc string as element `3` </span>
+<span class="c1">;   (which means the fourth thing in the list).</span>
+<span class="c1">; - The `fmt` variable which controls how we render </span>
+<span class="c1">;   something&#39;s name, synopsis, and doc string.</span>
+<span class="c1">;</span>
+
+<span class="p">(</span><span class="nf">defvar</span> <span class="nv">*fmt*</span>
+<span class="s">&quot;~%### ~(~a~)</span>
+
+<span class="s">_Synopsis:_ &lt;b&gt;`~(~S~)`&lt;/b&gt;  </span>
+<span class="s">~a</span>
+
+<span class="s">&lt;ul&gt;</span>
+<span class="s">&lt;details&gt;&lt;summary&gt;(..)&lt;/summary&gt;</span>
+
+<span class="s">```lisp</span>
+<span class="s">~(~S~)</span>
+<span class="s">```</span>
+<span class="s">&lt;/details&gt;&lt;/ul&gt;</span>
+<span class="s">&quot;</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nf">defvar</span> <span class="nv">*want*</span> <span class="o">&#39;</span><span class="p">((</span><span class="nf">defun</span>    <span class="o">.</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="nf">defclass</span>  <span class="o">.</span> <span class="mi">3</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nf">defmacro</span> <span class="o">.</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="nf">defstruct</span> <span class="o">.</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nf">defmethod</span> <span class="o">.</span> <span class="mi">3</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nf">defun</span> <span class="nv">worker</span> <span class="p">(</span><span class="nf">main</span> <span class="nv">top</span> <span class="nv">thing</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">stringp</span> <span class="nv">thing</span><span class="p">)</span> 
+    <span class="p">(</span><span class="nf">format</span> <span class="nv">main</span> <span class="s">&quot;~%~a~%&quot;</span> <span class="nv">thing</span><span class="p">))</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">listp</span> <span class="nv">thing</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member </span><span class="p">(</span><span class="nb">car </span><span class="nv">thing</span><span class="p">)</span> <span class="nv">*want*</span> <span class="nv">:key</span> <span class="o">#</span><span class="ss">&#39;car</span><span class="p">)</span>
+      <span class="p">(</span><span class="k">let* </span><span class="p">((</span><span class="nf">x</span>      <span class="p">(</span><span class="nf">first</span>  <span class="nv">thing</span><span class="p">))</span>
+             <span class="p">(</span><span class="nf">f</span>      <span class="p">(</span><span class="nf">second</span> <span class="nv">thing</span><span class="p">))</span>
+             <span class="p">(</span><span class="nf">pos</span>    <span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">assoc </span><span class="nv">x</span> <span class="nv">*want*</span><span class="p">)))</span>
+             <span class="p">(</span><span class="nf">s</span>      <span class="p">(</span><span class="nf">elt</span>    <span class="nv">thing</span> <span class="nv">pos</span><span class="p">))</span>
+             <span class="p">(</span><span class="nf">synopsis</span> <span class="p">(</span><span class="nb">cons </span><span class="nv">f</span> <span class="p">(</span><span class="nf">elt</span> <span class="nv">thing</span> <span class="p">(</span><span class="mi">1</span><span class="nv">-</span> <span class="nv">pos</span><span class="p">)))))</span>
+        <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">stringp</span> <span class="nv">s</span><span class="p">)</span>
+          <span class="p">(</span><span class="nf">setf</span> <span class="p">(</span><span class="nf">elt</span> <span class="nv">thing</span> <span class="nv">pos</span><span class="p">)</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+          <span class="p">(</span><span class="nf">format</span> <span class="nv">main</span> <span class="nv">*fmt*</span> <span class="nv">f</span>  <span class="nv">synopsis</span> <span class="nv">s</span> <span class="nv">thing</span><span class="p">)</span>
+          <span class="p">(</span><span class="nf">format</span> <span class="nv">top</span> <span class="s">&quot;- [~(~a~)](#~(~a~)) : ~a~%&quot;</span> 
+                  <span class="nv">f</span> <span class="nv">f</span> <span class="p">(</span><span class="nf">subseq</span> <span class="nv">s</span> <span class="mi">0</span> <span class="p">(</span><span class="nf">position</span> <span class="sc">#\Newline</span> <span class="nv">s</span><span class="p">))))))</span>
+    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member </span><span class="p">(</span><span class="nb">car </span><span class="nv">thing</span><span class="p">)</span><span class="o">&#39;</span><span class="p">(</span><span class="nv">label</span> <span class="nv">let</span><span class="p">))</span>
+      <span class="p">(</span><span class="nf">setf</span> <span class="nv">thing</span> <span class="p">(</span><span class="nb">cddr </span><span class="nv">thing</span><span class="p">))</span>
+      <span class="p">(</span><span class="nf">dolist</span> <span class="p">(</span><span class="nf">one</span> <span class="p">(</span><span class="nb">cddr </span><span class="nv">thing</span><span class="p">)</span> <span class="p">(</span><span class="nf">worker</span> <span class="nv">main</span> <span class="nv">top</span> <span class="nv">one</span><span class="p">))))))</span>
+
+<span class="p">(</span><span class="k">let </span><span class="p">(</span><span class="nf">thing</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">format</span>  <span class="nv">t</span> <span class="s">&quot;~a&quot;</span> <span class="p">(</span><span class="nf">with-output-to-string</span> <span class="p">(</span><span class="nf">main</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">format</span> <span class="nv">t</span> <span class="s">&quot;~a&quot;</span> <span class="p">(</span><span class="nf">with-output-to-string</span> <span class="p">(</span><span class="nf">top</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">loop</span> <span class="nv">while</span> <span class="p">(</span><span class="nf">setf</span> <span class="nv">thing</span> <span class="p">(</span><span class="nf">read-preserving-whitespace</span> <span class="nv">t</span> <span class="nv">nil</span><span class="p">))</span> 
+              <span class="k">do </span><span class="p">(</span><span class="nf">worker</span> <span class="nv">main</span> <span class="nv">top</span> <span class="nv">thing</span><span class="p">)))))))</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
